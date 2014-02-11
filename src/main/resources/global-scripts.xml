@@ -12,13 +12,13 @@ return;</string>
 
 // odk information
 globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);
-globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk_user&apos;);
-globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk_password&apos;);
+globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk&apos;);
+globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk&apos;);
 
 
 
 // openhds information
-globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;&apos;);
+globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);
 globalMap.put(&apos;OPENHDS_USER&apos;,&apos;admin&apos;);
 globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;test&apos;);
 
@@ -34,6 +34,7 @@ globalMap.put(&apos;OUTCOMES_TABLE&apos;,&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;)
 globalMap.put(&apos;RELATIONSHIP_TABLE&apos;,&apos;RELATIONSHIP_CORE&apos;);
 globalMap.put(&apos;SOCIAL_GROUP_TABLE&apos;,&apos;SOCIAL_GROUP_REGISTRATION_CORE&apos;);
 globalMap.put(&apos;VISIT_TABLE&apos;,&apos;VISIT_REGISTRATION_CORE&apos;);
+globalMap.put(&apos;BUILDING_TABLE&apos;,&apos;NEW_BUILDING_CORE&apos;);
 
 return;</string>
   </entry>

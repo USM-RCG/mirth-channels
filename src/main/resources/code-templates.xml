@@ -1,5 +1,5 @@
 <list>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
     <name>Result Set to XML</name>
     <tooltip>Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the column names, and the values of those XML elements will be the column values</tooltip>
@@ -23,9 +23,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>0e093113-2971-4efa-bdbc-6b6b7350a1a3</id>
     <name>Retrieve Out Migration Forms</name>
     <tooltip>Reads Out Migrations from the database</tooltip>
@@ -36,9 +35,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>00523e00-7a86-40fc-b07a-dd85cb372261</id>
     <name>Result Set to Forms List</name>
     <tooltip>Transforms a ResultSet to a List of XML forms representing as strings</tooltip>
@@ -53,9 +51,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>f13b33f5-99ae-45c3-9d6e-b5cfad640b39</id>
     <name>Retrieve Death Forms</name>
     <tooltip>Retrieve Death Forms</tooltip>
@@ -66,9 +63,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>63d7ca76-9a59-450e-87dc-e48fbcf87e42</id>
     <name>Retrieve Pregnancy Observation Forms</name>
     <tooltip>Retrieve Pregnancy Observations</tooltip>
@@ -79,9 +75,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>c9ab01f4-38e6-471d-a294-c615cf2f63c7</id>
     <name>Retrieve Internal In Migration Forms</name>
     <tooltip>Retrieve Internal In Migration Forms</tooltip>
@@ -92,9 +87,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>6e3b6567-ac0e-477f-91dc-d99979b47004</id>
     <name>Retrieve External In Migration Forms</name>
     <tooltip>Retreive External In Migration Forms</tooltip>
@@ -105,9 +99,8 @@ function resultSetToXml(rs, xmlElement) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>4e1616a1-7ed4-4f52-b32a-e1ea48b2eaa2</id>
     <name>Retrieve Pregnancy Outcome Forms</name>
     <tooltip>Retrieve Pregnancy Outcome Forms</tooltip>
@@ -118,7 +111,7 @@ function resultSetToXml(rs, xmlElement) {
 // Also, it&apos;s possible this pregnancy outcome depends 
 function addPregnancyOutcomes(visitId, dbConn) {
   var forms = new java.util.ArrayList();
-  var results = dbConn.executeCachedQuery(&quot;SELECT _URI, VISIT_ID, MOTHER_ID, PARTIAL_DATE,FIELD_WORKER_ID, RECORDED_DATE, FATHER_ID FROM &quot; + globalMap.get(&quot;PREGNANCY_OUTCOME_TABLE&quot;) + &quot; WHERE VISIT_ID = &apos;&quot; + visitId + &quot;&apos; AND processed_by_mirth is null&quot;);
+  var results = dbConn.executeCachedQuery(&quot;SELECT _URI, VISIT_ID, MOTHER_ID ,FIELD_WORKER_ID, RECORDED_DATE, FATHER_ID FROM &quot; + globalMap.get(&quot;PREGNANCY_OUTCOME_TABLE&quot;) + &quot; WHERE VISIT_ID = &apos;&quot; + visitId + &quot;&apos; AND processed_by_mirth is null&quot;);
   while(results.next()) {
     var pregOut = resultSetToXml(results, &quot;&lt;pregnancyoutcome event=&apos;pregnancyoutcome&apos; table-name=&apos;&quot; + globalMap.get(&quot;PREGNANCY_OUTCOME_TABLE&quot;) + &quot;&apos; /&gt;&quot;);
     // are there any outcomes for this pregnancy outcome?
@@ -136,9 +129,8 @@ function addPregnancyOutcomes(visitId, dbConn) {
 </code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>b3441bd0-63cd-4bd4-96d1-bf98d21a4cdd</id>
     <name>Mark Record as processed</name>
     <tooltip></tooltip>
@@ -156,9 +148,8 @@ function addPregnancyOutcomes(visitId, dbConn) {
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>286839da-5111-4bf4-b0db-a3a451b620a9</id>
     <name>Retrieve OutMigration from IM</name>
     <tooltip></tooltip>
@@ -171,9 +162,8 @@ var forms = resultsToForms(results, &quot;&lt;outmigration event=&apos;outmigrat
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
-  <codeTemplate>
+  <codeTemplate version="3.0.1">
     <id>92237dfa-421d-4632-a91b-222893451884</id>
     <name>Mark record as processed Rural</name>
     <tooltip></tooltip>
@@ -191,6 +181,5 @@ var forms = resultsToForms(results, &quot;&lt;outmigration event=&apos;outmigrat
 }</code>
     <type>FUNCTION</type>
     <scope>0</scope>
-    <version>2.2.2.6388</version>
   </codeTemplate>
 </list>
