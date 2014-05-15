@@ -1,5 +1,5 @@
 <channel version="3.0.1">
-  <id>5722b86e-351a-4b03-84cd-8db6577037c8</id>
+  <id>fdd39025-12ee-4398-9d81-a80470181582</id>
   <nextMetaDataId>11</nextMetaDataId>
   <name>Census Events</name>
   <description>This channel will attempt to read the submissions from ODK in order, according to the form&apos;s collectionDateTime field.&#xd;
@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1400175041762</time>
+    <time>1400177015125</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>15</revision>
+  <revision>4</revision>
   <sourceConnector version="3.0.1">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -59,8 +59,16 @@ return newForms;</script>
       <inboundTemplate encoding="base64"></inboundTemplate>
       <inboundDataType>XML</inboundDataType>
       <outboundDataType>XML</outboundDataType>
-      <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
-      <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
+      <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+          <stripNamespaces>true</stripNamespaces>
+        </serializationProperties>
+      </inboundProperties>
+      <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+          <stripNamespaces>true</stripNamespaces>
+        </serializationProperties>
+      </outboundProperties>
     </transformer>
     <filter version="3.0.1">
       <rules/>
@@ -195,15 +203,31 @@ dGg+CiAgPGZpZWxkX3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRp
 dmlkdWFsPg==</outboundTemplate>
         <inboundDataType>XML</inboundDataType>
         <outboundDataType>XML</outboundDataType>
-        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
-        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </outboundProperties>
       </transformer>
       <responseTransformer version="3.0.1">
         <steps/>
         <inboundDataType>XML</inboundDataType>
         <outboundDataType>XML</outboundDataType>
-        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
-        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1"/>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </outboundProperties>
       </responseTransformer>
       <filter version="3.0.1">
         <rules>
