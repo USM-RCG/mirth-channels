@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1400691629528</time>
+    <time>1403275598521</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>21</revision>
+  <revision>26</revision>
   <sourceConnector version="3.0.1">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -98,7 +98,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>0</sequenceNumber>
             <name>field worker extId</name>
-            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -107,7 +107,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;field_worker_ext_id&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -122,7 +122,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>1</sequenceNumber>
             <name>gender</name>
-            <script>tmp[&apos;individual_gender&apos;] = validate(msg[&apos;individual_gender&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_gender&apos;] = validate(msg[&apos;individual_gender&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -131,7 +131,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_gender&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_gender&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -146,7 +146,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>2</sequenceNumber>
             <name>age units</name>
-            <script>tmp[&apos;individual_age_units&apos;] = validate(msg[&apos;individual_age_units&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_age_units&apos;] = validate(msg[&apos;individual_age_units&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -155,7 +155,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_age_units&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_age_units&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -170,7 +170,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>3</sequenceNumber>
             <name>phone number</name>
-            <script>tmp[&apos;individual_phone_number&apos;] = validate(msg[&apos;individual_phone_number&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_phone_number&apos;] = validate(msg[&apos;individual_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -179,7 +179,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_phone_number&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_phone_number&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -194,7 +194,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>4</sequenceNumber>
             <name>household extId</name>
-            <script>tmp[&apos;household_ext_id&apos;] = validate(msg[&apos;household_ext_id&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;household_ext_id&apos;] = validate(msg[&apos;household_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -203,7 +203,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;household_ext_id&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;household_ext_id&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -218,7 +218,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>5</sequenceNumber>
             <name>age</name>
-            <script>tmp[&apos;individual_age&apos;] = validate(msg[&apos;individual_age&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_age&apos;] = validate(msg[&apos;individual_age&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -227,7 +227,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_age&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_age&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -242,7 +242,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>6</sequenceNumber>
             <name>dip</name>
-            <script>tmp[&apos;individual_dip&apos;] = validate(msg[&apos;individual_dip&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_dip&apos;] = validate(msg[&apos;individual_dip&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -251,7 +251,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_dip&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_dip&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -266,7 +266,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>7</sequenceNumber>
             <name>point of contact phone number</name>
-            <script>tmp[&apos;individual_point_of_contact_phone_number&apos;] = validate(msg[&apos;individual_point_of_contact_phone_number&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_point_of_contact_phone_number&apos;] = validate(msg[&apos;individual_point_of_contact_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -275,7 +275,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_point_of_contact_phone_number&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_point_of_contact_phone_number&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -290,7 +290,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>8</sequenceNumber>
             <name>relationship to head of household</name>
-            <script>tmp[&apos;individual_relationship_to_head_of_household&apos;] = validate(msg[&apos;individual_relationship_to_head_of_household&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_relationship_to_head_of_household&apos;] = validate(msg[&apos;individual_relationship_to_head_of_household&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -299,7 +299,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_relationship_to_head_of_household&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_relationship_to_head_of_household&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -314,7 +314,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>9</sequenceNumber>
             <name>language preference</name>
-            <script>tmp[&apos;individual_language_preference&apos;] = validate(msg[&apos;individual_language_preference&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_language_preference&apos;] = validate(msg[&apos;individual_language_preference&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -323,7 +323,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_language_preference&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_language_preference&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -338,7 +338,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>10</sequenceNumber>
             <name>member status</name>
-            <script>tmp[&apos;individual_member_status&apos;] = validate(msg[&apos;individual_member_status&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_member_status&apos;] = validate(msg[&apos;individual_member_status&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -347,7 +347,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_member_status&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_member_status&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -362,7 +362,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>11</sequenceNumber>
             <name>first name</name>
-            <script>tmp[&apos;individual_first_name&apos;] = validate(msg[&apos;individual_first_name&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_first_name&apos;] = validate(msg[&apos;individual_first_name&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -371,7 +371,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_first_name&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_first_name&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -386,7 +386,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>12</sequenceNumber>
             <name>other names</name>
-            <script>tmp[&apos;individual_other_names&apos;] = validate(msg[&apos;individual_other_names&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_other_names&apos;] = validate(msg[&apos;individual_other_names&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -395,7 +395,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_other_names&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_other_names&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -410,7 +410,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>13</sequenceNumber>
             <name>date time</name>
-            <script>tmp[&apos;collection_date_time&apos;] = validate(msg[&apos;collection_date_time&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;collection_date_time&apos;] = validate(msg[&apos;collection_date_time&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -419,7 +419,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;collection_date_time&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;collection_date_time&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -434,7 +434,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>14</sequenceNumber>
             <name>point of contact name</name>
-            <script>tmp[&apos;individual_point_of_contact_name&apos;] = validate(msg[&apos;individual_point_of_contact_name&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_point_of_contact_name&apos;] = validate(msg[&apos;individual_point_of_contact_name&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -443,7 +443,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_point_of_contact_name&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_point_of_contact_name&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -458,7 +458,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>15</sequenceNumber>
             <name>last name</name>
-            <script>tmp[&apos;individual_last_name&apos;] = validate(msg[&apos;individual_last_name&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_last_name&apos;] = validate(msg[&apos;individual_last_name&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -467,7 +467,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_last_name&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_last_name&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -482,7 +482,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>16</sequenceNumber>
             <name>other phone number</name>
-            <script>tmp[&apos;individual_other_phone_number&apos;] = validate(msg[&apos;individual_other_phone_number&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_other_phone_number&apos;] = validate(msg[&apos;individual_other_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -491,7 +491,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_other_phone_number&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_other_phone_number&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -506,7 +506,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>17</sequenceNumber>
             <name>individual extId</name>
-            <script>tmp[&apos;individual_ext_id&apos;] = validate(msg[&apos;individual_ext_id&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_ext_id&apos;] = validate(msg[&apos;individual_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -515,7 +515,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_ext_id&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_ext_id&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -530,7 +530,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>18</sequenceNumber>
             <name>date of birth</name>
-            <script>tmp[&apos;individual_date_of_birth&apos;] = validate(msg[&apos;individual_date_of_birth&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;individual_date_of_birth&apos;] = validate(msg[&apos;individual_date_of_birth&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -539,7 +539,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;individual_date_of_birth&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;individual_date_of_birth&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -554,7 +554,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
           <step>
             <sequenceNumber>19</sequenceNumber>
             <name>processed by mirth</name>
-            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString().toUpperCase(), &apos;&apos;, new Array());</script>
+            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
             <type>Message Builder</type>
             <data>
               <entry>
@@ -563,7 +563,7 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
               </entry>
               <entry>
                 <string>Mapping</string>
-                <string>msg[&apos;processed_by_mirth&apos;].toString().toUpperCase()</string>
+                <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
               </entry>
               <entry>
                 <string>DefaultValue</string>
@@ -634,6 +634,8 @@ X3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsRm9ybT4=
       </transformer>
       <responseTransformer version="3.0.1">
         <steps/>
+        <inboundTemplate encoding="base64"></inboundTemplate>
+        <outboundTemplate encoding="base64"></outboundTemplate>
         <inboundDataType>XML</inboundDataType>
         <outboundDataType>XML</outboundDataType>
         <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
