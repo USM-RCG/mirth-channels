@@ -38,7 +38,20 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
         </defaultQueueOffResponses>
         <respondAfterProcessing>true</respondAfterProcessing>
       </responseConnectorProperties>
-      <script></script>
+      <script>var newForms = new java.util.ArrayList()
+var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
+
+// emit new individuals
+var individualResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;INDIVIDUAL_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
+while (individualResult.next()) {
+  // create the individual herself
+  var individualXML = resultSetToXml(individualResult, &quot;&lt;individual event=&apos;individual&apos; table-name=&apos;&quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(individualXML.toString());
+
+}
+
+dbConn.close();
+return newForms;</script>
     </properties>
     <transformer version="3.0.1">
       <steps/>

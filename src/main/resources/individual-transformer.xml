@@ -1,0 +1,539 @@
+<transformer version="3.0.1">
+  <steps>
+    <step>
+      <sequenceNumber>0</sequenceNumber>
+      <name>field worker extId</name>
+      <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;field_worker_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>1</sequenceNumber>
+      <name>gender</name>
+      <script>tmp[&apos;individual_gender&apos;] = validate(msg[&apos;individual_gender&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_gender&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_gender&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>2</sequenceNumber>
+      <name>age units</name>
+      <script>tmp[&apos;individual_age_units&apos;] = validate(msg[&apos;individual_age_units&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_age_units&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_age_units&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>3</sequenceNumber>
+      <name>phone number</name>
+      <script>tmp[&apos;individual_phone_number&apos;] = validate(msg[&apos;individual_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_phone_number&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_phone_number&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>4</sequenceNumber>
+      <name>household extId</name>
+      <script>tmp[&apos;household_ext_id&apos;] = validate(msg[&apos;household_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;household_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;household_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>5</sequenceNumber>
+      <name>age</name>
+      <script>tmp[&apos;individual_age&apos;] = validate(msg[&apos;individual_age&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_age&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_age&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>6</sequenceNumber>
+      <name>dip</name>
+      <script>tmp[&apos;individual_dip&apos;] = validate(msg[&apos;individual_dip&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_dip&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_dip&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>7</sequenceNumber>
+      <name>point of contact phone number</name>
+      <script>tmp[&apos;individual_point_of_contact_phone_number&apos;] = validate(msg[&apos;individual_point_of_contact_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_point_of_contact_phone_number&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_point_of_contact_phone_number&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>8</sequenceNumber>
+      <name>relationship to head of household</name>
+      <script>tmp[&apos;individual_relationship_to_head_of_household&apos;] = validate(msg[&apos;individual_relationship_to_head_of_household&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_relationship_to_head_of_household&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_relationship_to_head_of_household&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>9</sequenceNumber>
+      <name>language preference</name>
+      <script>tmp[&apos;individual_language_preference&apos;] = validate(msg[&apos;individual_language_preference&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_language_preference&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_language_preference&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>10</sequenceNumber>
+      <name>member status</name>
+      <script>tmp[&apos;individual_member_status&apos;] = validate(msg[&apos;individual_member_status&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_member_status&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_member_status&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>11</sequenceNumber>
+      <name>first name</name>
+      <script>tmp[&apos;individual_first_name&apos;] = validate(msg[&apos;individual_first_name&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_first_name&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_first_name&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>12</sequenceNumber>
+      <name>other names</name>
+      <script>tmp[&apos;individual_other_names&apos;] = validate(msg[&apos;individual_other_names&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_other_names&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_other_names&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>13</sequenceNumber>
+      <name>date time</name>
+      <script>tmp[&apos;collection_date_time&apos;] = validate(msg[&apos;collection_date_time&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;collection_date_time&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;collection_date_time&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>14</sequenceNumber>
+      <name>point of contact name</name>
+      <script>tmp[&apos;individual_point_of_contact_name&apos;] = validate(msg[&apos;individual_point_of_contact_name&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_point_of_contact_name&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_point_of_contact_name&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>15</sequenceNumber>
+      <name>last name</name>
+      <script>tmp[&apos;individual_last_name&apos;] = validate(msg[&apos;individual_last_name&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_last_name&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_last_name&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>16</sequenceNumber>
+      <name>other phone number</name>
+      <script>tmp[&apos;individual_other_phone_number&apos;] = validate(msg[&apos;individual_other_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_other_phone_number&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_other_phone_number&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>17</sequenceNumber>
+      <name>individual extId</name>
+      <script>tmp[&apos;individual_ext_id&apos;] = validate(msg[&apos;individual_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>18</sequenceNumber>
+      <name>date of birth</name>
+      <script>tmp[&apos;individual_date_of_birth&apos;] = validate(msg[&apos;individual_date_of_birth&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;individual_date_of_birth&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;individual_date_of_birth&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>19</sequenceNumber>
+      <name>processed by mirth</name>
+      <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;processed_by_mirth&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+  </steps>
+  <inboundTemplate encoding="base64">PGluZGl2aWR1YWwgZXZlbnQ9ImluZGl2aWR1YWwiIHRhYmxlLW5hbWU9ImluZGl2aWR1YWxfY29y
+ZSI+CiAgPF91cmk+PC9fdXJpPgogIDxpbmRpdmlkdWFsX2dlbmRlcj48L2luZGl2aWR1YWxfZ2Vu
+ZGVyPgogIDxpbmRpdmlkdWFsX2FnZV91bml0cz48L2luZGl2aWR1YWxfYWdlX3VuaXRzPgogIDxp
+bmRpdmlkdWFsX3Bob25lX251bWJlciAgPjwvaW5kaXZpZHVhbF9waG9uZV9udW1iZXI+CiAgPGhv
+dXNlaG9sZF9leHRfaWQgPjwvaG91c2Vob2xkX2V4dF9pZD4KICA8aW5kaXZpZHVhbF9hZ2UgPjwv
+aW5kaXZpZHVhbF9hZ2U+CiAgPGluZGl2aWR1YWxfZGlwPjwvaW5kaXZpZHVhbF9kaXA+CiAgPGlu
+ZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9wb2lu
+dF9vZl9jb250YWN0X3Bob25lX251bWJlcj4KICA8aW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9f
+aGVhZF9vZl9ob3VzZWhvbGQgPjwvaW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVhZF9vZl9o
+b3VzZWhvbGQ+CiAgPGluZGl2aWR1YWxfbGFuZ3VhZ2VfcHJlZmVyZW5jZSA+PC9pbmRpdmlkdWFs
+X2xhbmd1YWdlX3ByZWZlcmVuY2U+CiAgPGluZGl2aWR1YWxfbWVtYmVyX3N0YXR1cyA+PC9pbmRp
+dmlkdWFsX21lbWJlcl9zdGF0dXM+CiAgPGluZGl2aWR1YWxfZmlyc3RfbmFtZSA+PC9pbmRpdmlk
+dWFsX2ZpcnN0X25hbWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfbmFtZXMgPjwvaW5kaXZpZHVhbF9v
+dGhlcl9uYW1lcz4KICA8Y29sbGVjdGlvbl9kYXRlX3RpbWUgPjwvY29sbGVjdGlvbl9kYXRlX3Rp
+bWU+CiAgPGluZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9uYW1lID48L2luZGl2aWR1YWxfcG9p
+bnRfb2ZfY29udGFjdF9uYW1lPgogIDxpbmRpdmlkdWFsX2xhc3RfbmFtZSA+PC9pbmRpdmlkdWFs
+X2xhc3RfbmFtZT4KICA8aW5kaXZpZHVhbF9vdGhlcl9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVh
+bF9vdGhlcl9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfZXh0X2lkID48L2luZGl2aWR1YWxf
+ZXh0X2lkPgogIDxpbmRpdmlkdWFsX2RhdGVfb2ZfYmlydGg+PC9pbmRpdmlkdWFsX2RhdGVfb2Zf
+YmlydGg+CiAgPHByb2Nlc3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlfbWlydGg+CiAgPGZp
+ZWxkX3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsPg==
+</inboundTemplate>
+  <outboundTemplate encoding="base64">PGluZGl2aWR1YWxGb3JtPgogIDxpbmRpdmlkdWFsX2dlbmRlcj48L2luZGl2aWR1YWxfZ2VuZGVy
+PgogIDxpbmRpdmlkdWFsX2FnZV91bml0cz48L2luZGl2aWR1YWxfYWdlX3VuaXRzPgogIDxpbmRp
+dmlkdWFsX3Bob25lX251bWJlciAgPjwvaW5kaXZpZHVhbF9waG9uZV9udW1iZXI+CiAgPGhvdXNl
+aG9sZF9leHRfaWQgPjwvaG91c2Vob2xkX2V4dF9pZD4KICA8aW5kaXZpZHVhbF9hZ2UgPjwvaW5k
+aXZpZHVhbF9hZ2U+CiAgPGluZGl2aWR1YWxfZGlwPjwvaW5kaXZpZHVhbF9kaXA+CiAgPGluZGl2
+aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9wb2ludF9v
+Zl9jb250YWN0X3Bob25lX251bWJlcj4KICA8aW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVh
+ZF9vZl9ob3VzZWhvbGQgPjwvaW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVhZF9vZl9ob3Vz
+ZWhvbGQ+CiAgPGluZGl2aWR1YWxfbGFuZ3VhZ2VfcHJlZmVyZW5jZSA+PC9pbmRpdmlkdWFsX2xh
+bmd1YWdlX3ByZWZlcmVuY2U+CiAgPGluZGl2aWR1YWxfbWVtYmVyX3N0YXR1cyA+PC9pbmRpdmlk
+dWFsX21lbWJlcl9zdGF0dXM+CiAgPGluZGl2aWR1YWxfZmlyc3RfbmFtZSA+PC9pbmRpdmlkdWFs
+X2ZpcnN0X25hbWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfbmFtZXMgPjwvaW5kaXZpZHVhbF9vdGhl
+cl9uYW1lcz4KICA8Y29sbGVjdGlvbl9kYXRlX3RpbWUgPjwvY29sbGVjdGlvbl9kYXRlX3RpbWU+
+CiAgPGluZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9uYW1lID48L2luZGl2aWR1YWxfcG9pbnRf
+b2ZfY29udGFjdF9uYW1lPgogIDxpbmRpdmlkdWFsX2xhc3RfbmFtZSA+PC9pbmRpdmlkdWFsX2xh
+c3RfbmFtZT4KICA8aW5kaXZpZHVhbF9vdGhlcl9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9v
+dGhlcl9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfZXh0X2lkID48L2luZGl2aWR1YWxfZXh0
+X2lkPgogIDxpbmRpdmlkdWFsX2RhdGVfb2ZfYmlydGg+PC9pbmRpdmlkdWFsX2RhdGVfb2ZfYmly
+dGg+CiAgPHByb2Nlc3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlfbWlydGg+CiAgPGZpZWxk
+X3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsRm9ybT4=
+</outboundTemplate>
+  <inboundDataType>XML</inboundDataType>
+  <outboundDataType>XML</outboundDataType>
+  <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+      <stripNamespaces>true</stripNamespaces>
+    </serializationProperties>
+  </inboundProperties>
+  <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.1">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.1">
+      <stripNamespaces>true</stripNamespaces>
+    </serializationProperties>
+  </outboundProperties>
+</transformer>
