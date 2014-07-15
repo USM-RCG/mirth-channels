@@ -1,0 +1,145 @@
+<transformer version="3.0.3">
+  <steps>
+    <step>
+      <sequenceNumber>0</sequenceNumber>
+      <name>visit date</name>
+      <script>tmp[&apos;visit_date&apos;] = validate(msg[&apos;visit_date&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;visit_date&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;visit_date&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>1</sequenceNumber>
+      <name>field worker ext id</name>
+      <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;field_worker_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>2</sequenceNumber>
+      <name>visit ext id</name>
+      <script>tmp[&apos;visit_ext_id&apos;] = validate(msg[&apos;visit_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;visit_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;visit_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>3</sequenceNumber>
+      <name>location ext id</name>
+      <script>tmp[&apos;location_ext_id&apos;] = validate(msg[&apos;location_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;location_ext_id&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;location_ext_id&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+    <step>
+      <sequenceNumber>4</sequenceNumber>
+      <name>processed by mirth</name>
+      <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
+      <type>Message Builder</type>
+      <data>
+        <entry>
+          <string>Variable</string>
+          <string>tmp[&apos;processed_by_mirth&apos;]</string>
+        </entry>
+        <entry>
+          <string>Mapping</string>
+          <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
+        </entry>
+        <entry>
+          <string>DefaultValue</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>RegularExpressions</string>
+          <list/>
+        </entry>
+      </data>
+    </step>
+  </steps>
+  <inboundTemplate encoding="base64">PHZpc2l0IGV2ZW50PSJ2aXNpdCIgdGFibGUtbmFtZT0idmlzaXRfY29yZSI+CiAgPF91cmk+PC9f
+dXJpPgogIDx2aXNpdF9kYXRlID48L3Zpc2l0X2RhdGU+CiAgPHZpc2l0X2V4dF9pZCA+PC92aXNp
+dF9leHRfaWQ+CiAgPGxvY2F0aW9uX2V4dF9pZCA+PC9sb2NhdGlvbl9leHRfaWQ+CiAgPHByb2Nl
+c3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlfbWlydGg+CiAgPGZpZWxkX3dvcmtlcl9leHRf
+aWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC92aXNpdD4=</inboundTemplate>
+  <outboundTemplate encoding="base64">PHZpc2l0Rm9ybT4KICA8dmlzaXRfZGF0ZSA+PC92aXNpdF9kYXRlPgogIDx2aXNpdF9leHRfaWQg
+PjwvdmlzaXRfZXh0X2lkPgogIDxsb2NhdGlvbl9leHRfaWQgPjwvbG9jYXRpb25fZXh0X2lkPgog
+IDxwcm9jZXNzZWRfYnlfbWlydGggPjwvcHJvY2Vzc2VkX2J5X21pcnRoPgogIDxmaWVsZF93b3Jr
+ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvdmlzaXRGb3JtPg==</outboundTemplate>
+  <inboundDataType>XML</inboundDataType>
+  <outboundDataType>XML</outboundDataType>
+  <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+      <stripNamespaces>true</stripNamespaces>
+    </serializationProperties>
+  </inboundProperties>
+  <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+      <stripNamespaces>true</stripNamespaces>
+    </serializationProperties>
+  </outboundProperties>
+</transformer>
