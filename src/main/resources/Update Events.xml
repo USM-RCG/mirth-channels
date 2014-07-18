@@ -1,14 +1,14 @@
 <channel version="3.0.3">
   <id>5d226fdb-8c69-40fc-a9df-56dbdf6b7fc2</id>
-  <nextMetaDataId>3</nextMetaDataId>
+  <nextMetaDataId>4</nextMetaDataId>
   <name>Update Events</name>
   <description>Channel for Update Round demographic events</description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1405438395375</time>
+    <time>1405702950728</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>25</revision>
+  <revision>10</revision>
   <sourceConnector version="3.0.3">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -45,6 +45,15 @@ while (visitResult.next()) {
   newForms.add(visitXML.toString());
 
 }
+
+var outMigrationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;OUT_MIGRATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (outMigrationResult.next()) {
+  // create the outmigration
+  var outMigrationXML = resultSetToXml(outMigrationResult, &quot;&lt;outmigration event=&apos;outmigration&apos; table-name=&apos;&quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(outMigrationXML.toString());
+
+}
+
 
 dbConn.close();
 return newForms;</script>
@@ -86,7 +95,7 @@ return newForms;</script>
           <rotate>false</rotate>
           <threadCount>1</threadCount>
         </queueConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/visitForm</host>
+        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/visitForm</host>
         <method>post</method>
         <headers class="linked-hash-map"/>
         <parameters class="linked-hash-map"/>
@@ -274,6 +283,272 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvdmlzaXRGb3JtPg==</outboundTempla
             </data>
             <type>JavaScript</type>
             <script>return msg[&quot;@event&quot;].toString() === &quot;visit&quot;;</script>
+            <operator>NONE</operator>
+          </rule>
+        </rules>
+      </filter>
+      <transportName>HTTP Sender</transportName>
+      <mode>DESTINATION</mode>
+      <enabled>true</enabled>
+      <waitForPrevious>true</waitForPrevious>
+    </connector>
+    <connector version="3.0.3">
+      <metaDataId>3</metaDataId>
+      <name>OutMigration</name>
+      <properties class="com.mirth.connect.connectors.http.HttpDispatcherProperties" version="3.0.3">
+        <queueConnectorProperties version="3.0.3">
+          <queueEnabled>false</queueEnabled>
+          <sendFirst>false</sendFirst>
+          <retryIntervalMillis>10000</retryIntervalMillis>
+          <regenerateTemplate>false</regenerateTemplate>
+          <retryCount>0</retryCount>
+          <rotate>false</rotate>
+          <threadCount>1</threadCount>
+        </queueConnectorProperties>
+        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/outMigrationForm</host>
+        <method>post</method>
+        <headers class="linked-hash-map"/>
+        <parameters class="linked-hash-map"/>
+        <includeHeadersInResponse>false</includeHeadersInResponse>
+        <multipart>false</multipart>
+        <useAuthentication>true</useAuthentication>
+        <authenticationType>Basic</authenticationType>
+        <username>admin</username>
+        <password>test</password>
+        <content>${message.transformedData}</content>
+        <contentType>application/xml</contentType>
+        <charset>UTF-8</charset>
+        <socketTimeout>30000</socketTimeout>
+      </properties>
+      <transformer version="3.0.3">
+        <steps>
+          <step>
+            <sequenceNumber>0</sequenceNumber>
+            <name>out migration reason</name>
+            <script>tmp[&apos;out_migration_reason&apos;] = validate(msg[&apos;out_migration_reason&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;out_migration_reason&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;out_migration_reason&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>1</sequenceNumber>
+            <name>visit extid</name>
+            <script>tmp[&apos;visit_ext_id&apos;] = validate(msg[&apos;visit_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;visit_ext_id&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;visit_ext_id&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>2</sequenceNumber>
+            <name>out migration name of destination</name>
+            <script>tmp[&apos;out_migration_name_of_destination&apos;] = validate(msg[&apos;out_migration_name_of_destination&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;out_migration_name_of_destination&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;out_migration_name_of_destination&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>3</sequenceNumber>
+            <name>processed by mirth</name>
+            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;processed_by_mirth&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>4</sequenceNumber>
+            <name>field worker extid</name>
+            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;field_worker_ext_id&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>5</sequenceNumber>
+            <name>out migration date</name>
+            <script>tmp[&apos;out_migration_date&apos;] = validate(msg[&apos;out_migration_date&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;out_migration_date&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;out_migration_date&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+          <step>
+            <sequenceNumber>6</sequenceNumber>
+            <name>out migration individual extid</name>
+            <script>tmp[&apos;out_migration_individual_ext_id&apos;] = validate(msg[&apos;out_migration_individual_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;out_migration_individual_ext_id&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;out_migration_individual_ext_id&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
+        </steps>
+        <inboundTemplate encoding="base64">PG91dG1pZ3JhdGlvbiBldmVudD0ib3V0bWlncmF0aW9uIiB0YWJsZS1uYW1lPSJvdXRfbWlncmF0
+aW9uX2NvcmUiPgogIDxfdXJpPjwvX3VyaT4KICA8b3V0X21pZ3JhdGlvbl9yZWFzb24gPjwvb3V0
+X21pZ3JhdGlvbl9yZWFzb24+CiAgPHZpc2l0X2V4dF9pZCA+PC92aXNpdF9leHRfaWQ+CiAgPG91
+dF9taWdyYXRpb25faW5kaXZpZHVhbF9leHRfaWQgPjwvb3V0X21pZ3JhdGlvbl9pbmRpdmlkdWFs
+X2V4dF9pZD4KICA8b3V0X21pZ3JhdGlvbl9uYW1lX29mX2Rlc3RpbmF0aW9uID48L291dF9taWdy
+YXRpb25fbmFtZV9vZl9kZXN0aW5hdGlvbj4KICA8cHJvY2Vzc2VkX2J5X21pcnRoID48L3Byb2Nl
+c3NlZF9ieV9taXJ0aD4KICA8ZmllbGRfd29ya2VyX2V4dF9pZCA+PC9maWVsZF93b3JrZXJfZXh0
+X2lkPgogIDxvdXRfbWlncmF0aW9uX2RhdGUgPjwvb3V0X21pZ3JhdGlvbl9kYXRlPgo8L291dG1p
+Z3JhdGlvbj4=</inboundTemplate>
+        <outboundTemplate encoding="base64">PG91dE1pZ3JhdGlvbkZvcm0+CiAgPG91dF9taWdyYXRpb25fcmVhc29uID48L291dF9taWdyYXRp
+b25fcmVhc29uPgogIDx2aXNpdF9leHRfaWQgPjwvdmlzaXRfZXh0X2lkPgogIDxvdXRfbWlncmF0
+aW9uX2luZGl2aWR1YWxfZXh0X2lkID48L291dF9taWdyYXRpb25faW5kaXZpZHVhbF9leHRfaWQ+
+CiAgPG91dF9taWdyYXRpb25fbmFtZV9vZl9kZXN0aW5hdGlvbiA+PC9vdXRfbWlncmF0aW9uX25h
+bWVfb2ZfZGVzdGluYXRpb24+CiAgPHByb2Nlc3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlf
+bWlydGg+CiAgPGZpZWxkX3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KICA8
+b3V0X21pZ3JhdGlvbl9kYXRlID48L291dF9taWdyYXRpb25fZGF0ZT4KPC9vdXRNaWdyYXRpb25G
+b3JtPg==</outboundTemplate>
+        <inboundDataType>XML</inboundDataType>
+        <outboundDataType>XML</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </outboundProperties>
+      </transformer>
+      <responseTransformer version="3.0.3">
+        <steps/>
+        <inboundDataType>XML</inboundDataType>
+        <outboundDataType>XML</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="3.0.3">
+            <stripNamespaces>true</stripNamespaces>
+          </serializationProperties>
+        </outboundProperties>
+      </responseTransformer>
+      <filter version="3.0.3">
+        <rules>
+          <rule>
+            <sequenceNumber>0</sequenceNumber>
+            <name>New Rule</name>
+            <data>
+              <entry>
+                <string>Script</string>
+                <string>return msg[&quot;@event&quot;].toString() === &quot;outmigration&quot;;</string>
+              </entry>
+            </data>
+            <type>JavaScript</type>
+            <script>return msg[&quot;@event&quot;].toString() === &quot;outmigration&quot;;</script>
             <operator>NONE</operator>
           </rule>
         </rules>
