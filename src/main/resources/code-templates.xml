@@ -1,46 +1,53 @@
-<list>
-  <codeTemplate version="3.0.1">
-    <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
-    <name>Result Set to XML</name>
-    <tooltip>Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the column names, and the values of those XML elements will be the column values</tooltip>
-    <code>// rs - the ResultSet instance
-// xmlElement - a string containing the document level xml element to use for the XML document
-function resultSetToXml(rs, xmlElement) {
-  var rsmd = rs.getMetaData();
-  var result = new XML(xmlElement);
+<map>
+  <entry>
+    <string>Shutdown</string>
+    <string>// This script executes once when all channels shut down from a redeploy
+// You only have access to the globalMap here to persist data
+return;</string>
+  </entry>
+  <entry>
+    <string>Postprocessor</string>
+    <string>// This script executes once after a message has been processed
+// This script applies across all channels
+return;</string>
+  </entry>
+  <entry>
+    <string>Deploy</string>
+    <string>// This script executes once when all channels start up from a redeploy
+// You only have access to the globalMap here to persist data
 
-  for (var i = 1; i &lt;= rsmd.getColumnCount(); i++)  {
-	var value = rs.getString(i);
+// odk information
+globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);
+globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk&apos;);
+globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk&apos;);
 
-    if (value === &quot;null&quot;) {
-      value = null;
-    }
 
-    result[rsmd.getColumnName(i).toLowerCase()] = value;
-  }
 
-  return result;
-}</code>
-    <type>FUNCTION</type>
-    <scope>0</scope>
-  </codeTemplate>
-  <codeTemplate version="3.0.1">
-    <id>b3441bd0-63cd-4bd4-96d1-bf98d21a4cdd</id>
-    <name>Mark Record as processed</name>
-    <tooltip></tooltip>
-    <code>function markRecordAsProcessed(rawData) {
-  var originalXml = new XML(rawData);
-  // retrieve the table to update
-  var tableName = originalXml[&quot;@table-name&quot;].toString();
-  var uri = originalXml[&quot;_uri&quot;].toString();
+// openhds information
+globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);
+globalMap.put(&apos;OPENHDS_USER&apos;,&apos;admin&apos;);
+globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;test&apos;);
 
-    if (tableName !== &quot;OMGIM&quot;) {
-  var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
-  var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET processed_by_mirth = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
-  dbConn.close();
-} 
-}</code>
-    <type>FUNCTION</type>
-    <scope>0</scope>
-  </codeTemplate>
-</list>
+// odk tables and columns
+globalMap.put(&apos;INDIVIDUAL_TABLE&apos;,&apos;INDIVIDUAL_CORE&apos;);
+globalMap.put(&apos;INDIVIDUAL_COLUMNS&apos;,&apos;_URI, INDIVIDUAL_GENDER, INDIVIDUAL_AGE_UNITS, INDIVIDUAL_PHONE_NUMBER, HOUSEHOLD_EXT_ID, INDIVIDUAL_AGE, INDIVIDUAL_DIP, INDIVIDUAL_POINT_OF_CONTACT_PHONE_NUMBER, INDIVIDUAL_RELATIONSHIP_TO_HEAD_OF_HOUSEHOLD, INDIVIDUAL_LANGUAGE_PREFERENCE, INDIVIDUAL_MEMBER_STATUS, INDIVIDUAL_FIRST_NAME, INDIVIDUAL_OTHER_NAMES, COLLECTION_DATE_TIME, INDIVIDUAL_POINT_OF_CONTACT_NAME, INDIVIDUAL_LAST_NAME, INDIVIDUAL_OTHER_PHONE_NUMBER, INDIVIDUAL_EXT_ID, INDIVIDUAL_DATE_OF_BIRTH, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
+
+// Update Round: odk tables and columns
+globalMap.put(&apos;VISIT_TABLE&apos;,&apos;VISIT_CORE&apos;);
+globalMap.put(&apos;VISIT_COLUMNS&apos;,&apos;_URI, VISIT_DATE, VISIT_EXT_ID, LOCATION_EXT_ID, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
+
+globalMap.put(&apos;OUT_MIGRATION_TABLE&apos;,&apos;OUT_MIGRATION_CORE&apos;);
+globalMap.put(&apos;OUT_MIGRATION_COLUMNS&apos;,&apos;_URI, OUT_MIGRATION_DATE, VISIT_EXT_ID, OUT_MIGRATION_INDIVIDUAL_EXT_ID, OUT_MIGRATION_NAME_OF_DESTINATION, OUT_MIGRATION_REASON, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
+
+globalMap.put(&apos;LOCATION_TABLE&apos;, &apos;LOCATION_CORE&apos;);
+globalMap.put(&apos;LOCATION_COLUMNS&apos;,&apos;_URI, HIERARCHY_EXT_ID, LOCATION_EXT_ID, LOCATION_NAME, LOCATION_TYPE, COMMUNITY_NAME, MAP_AREA_NAME, LOCALITY_NAME, SECTOR_NAME, COLLECTION_DATE_TIME, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID, LOCATION_BUILDING_NUMBER, LOCATION_FLOOR_NUMBER&apos;);
+
+return;</string>
+  </entry>
+  <entry>
+    <string>Preprocessor</string>
+    <string>// Modify the message variable below to pre process data
+// This script applies across all channels
+return message;</string>
+  </entry>
+</map>
