@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1411586849169</time>
+    <time>1412696322975</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>11</revision>
+  <revision>5</revision>
   <sourceConnector version="3.0.3">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -41,21 +41,46 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
       <script>var newForms = new java.util.ArrayList()
 var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
 
-var locationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;LOCATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
+var visitResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;VISIT_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (visitResult.next()) {
+  // create the visit
+  var visitXML = resultSetToXml(visitResult, &quot;&lt;visit event=&apos;visit&apos; table-name=&apos;&quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(visitXML.toString());
 
-while (locationResult.next()) {
-  // create the locationf
-  var locationXML = resultSetToXml(locationResult, &quot;&lt;locationForm event=&apos;locationForm&apos; table-name=&apos;&quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(locationXML.toString());
 }
 
-// emit new individuals
-var individualResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;INDIVIDUAL_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
-while (individualResult.next()) {
-  // create the individual herself
-  var individualXML = resultSetToXml(individualResult, &quot;&lt;individual event=&apos;individual&apos; table-name=&apos;&quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(individualXML.toString());
+var outMigrationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;OUT_MIGRATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (outMigrationResult.next()) {
+  // create the outmigration
+  var outMigrationXML = resultSetToXml(outMigrationResult, &quot;&lt;outmigration event=&apos;outmigration&apos; table-name=&apos;&quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(outMigrationXML.toString());
+
 }
+
+var inMigrationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;IN_MIGRATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;IN_MIGRATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (inMigrationResult.next()) {
+  // create the inmigration
+  var inMigrationXML = resultSetToXml(inMigrationResult, &quot;&lt;inmigration event=&apos;inmigration&apos; table-name=&apos;&quot; + globalMap.get(&quot;IN_MIGRATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(inMigrationXML.toString());
+
+}
+
+var deathResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;DEATH_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;DEATH_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (deathResult.next()) {
+  // create the death
+  var deathXML = resultSetToXml(deathResult, &quot;&lt;death event=&apos;death&apos; table-name=&apos;&quot; + globalMap.get(&quot;DEATH_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(deathXML.toString());
+
+}
+
+var pregObservationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;PREGNANCY_OBSERVATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
+while (pregObservationResult.next()) {
+  // create the death
+  var pregObservationXml = resultSetToXml(pregObservationResult, &quot;&lt;pregnancyobservation event=&apos;pregnancyobservation&apos; table-name=&apos;&quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(pregObservationXml.toString());
+
+}
+
 
 dbConn.close();
 return newForms;</script>
@@ -98,7 +123,7 @@ return newForms;</script>
           <rotate>false</rotate>
           <threadCount>1</threadCount>
         </queueConnectorProperties>
-        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/individualForm</host>
+        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/individualForm</host>
         <method>post</method>
         <headers class="linked-hash-map"/>
         <parameters class="linked-hash-map"/>
@@ -704,7 +729,7 @@ X3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsRm9ybT4=
           <rotate>false</rotate>
           <threadCount>1</threadCount>
         </queueConnectorProperties>
-        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/locationForm</host>
+        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/locationForm</host>
         <method>post</method>
         <headers class="linked-hash-map"/>
         <parameters class="linked-hash-map"/>
