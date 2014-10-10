@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1412696322975</time>
+    <time>1412959668723</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>5</revision>
+  <revision>12</revision>
   <sourceConnector version="3.0.3">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -41,46 +41,21 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
       <script>var newForms = new java.util.ArrayList()
 var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
 
-var visitResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;VISIT_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (visitResult.next()) {
-  // create the visit
-  var visitXML = resultSetToXml(visitResult, &quot;&lt;visit event=&apos;visit&apos; table-name=&apos;&quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(visitXML.toString());
+var locationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;LOCATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
 
+while (locationResult.next()) {
+  // create the locationf
+  var locationXML = resultSetToXml(locationResult, &quot;&lt;locationForm event=&apos;locationForm&apos; table-name=&apos;&quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(locationXML.toString());
 }
 
-var outMigrationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;OUT_MIGRATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (outMigrationResult.next()) {
-  // create the outmigration
-  var outMigrationXML = resultSetToXml(outMigrationResult, &quot;&lt;outmigration event=&apos;outmigration&apos; table-name=&apos;&quot; + globalMap.get(&quot;OUT_MIGRATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(outMigrationXML.toString());
-
+// emit new individuals
+var individualResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;INDIVIDUAL_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
+while (individualResult.next()) {
+  // create the individual herself
+  var individualXML = resultSetToXml(individualResult, &quot;&lt;individual event=&apos;individual&apos; table-name=&apos;&quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
+  newForms.add(individualXML.toString());
 }
-
-var inMigrationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;IN_MIGRATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;IN_MIGRATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (inMigrationResult.next()) {
-  // create the inmigration
-  var inMigrationXML = resultSetToXml(inMigrationResult, &quot;&lt;inmigration event=&apos;inmigration&apos; table-name=&apos;&quot; + globalMap.get(&quot;IN_MIGRATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(inMigrationXML.toString());
-
-}
-
-var deathResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;DEATH_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;DEATH_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (deathResult.next()) {
-  // create the death
-  var deathXML = resultSetToXml(deathResult, &quot;&lt;death event=&apos;death&apos; table-name=&apos;&quot; + globalMap.get(&quot;DEATH_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(deathXML.toString());
-
-}
-
-var pregObservationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;PREGNANCY_OBSERVATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (pregObservationResult.next()) {
-  // create the death
-  var pregObservationXml = resultSetToXml(pregObservationResult, &quot;&lt;pregnancyobservation event=&apos;pregnancyobservation&apos; table-name=&apos;&quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(pregObservationXml.toString());
-
-}
-
 
 dbConn.close();
 return newForms;</script>
@@ -123,7 +98,7 @@ return newForms;</script>
           <rotate>false</rotate>
           <threadCount>1</threadCount>
         </queueConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/individualForm</host>
+        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/individualForm</host>
         <method>post</method>
         <headers class="linked-hash-map"/>
         <parameters class="linked-hash-map"/>
@@ -620,50 +595,74 @@ return newForms;</script>
               </entry>
             </data>
           </step>
+          <step>
+            <sequenceNumber>20</sequenceNumber>
+            <name>nationality</name>
+            <script>tmp[&apos;individual_nationality&apos;] = validate(msg[&apos;individual_nationality&apos;].toString(), &apos;&apos;, new Array());</script>
+            <type>Message Builder</type>
+            <data>
+              <entry>
+                <string>Variable</string>
+                <string>tmp[&apos;individual_nationality&apos;]</string>
+              </entry>
+              <entry>
+                <string>Mapping</string>
+                <string>msg[&apos;individual_nationality&apos;].toString()</string>
+              </entry>
+              <entry>
+                <string>DefaultValue</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>RegularExpressions</string>
+                <list/>
+              </entry>
+            </data>
+          </step>
         </steps>
         <inboundTemplate encoding="base64">PGluZGl2aWR1YWwgZXZlbnQ9ImluZGl2aWR1YWwiIHRhYmxlLW5hbWU9ImluZGl2aWR1YWxfY29y
 ZSI+CiAgPF91cmk+PC9fdXJpPgogIDxpbmRpdmlkdWFsX2dlbmRlcj48L2luZGl2aWR1YWxfZ2Vu
-ZGVyPgogIDxpbmRpdmlkdWFsX2FnZV91bml0cz48L2luZGl2aWR1YWxfYWdlX3VuaXRzPgogIDxp
-bmRpdmlkdWFsX3Bob25lX251bWJlciAgPjwvaW5kaXZpZHVhbF9waG9uZV9udW1iZXI+CiAgPGhv
-dXNlaG9sZF9leHRfaWQgPjwvaG91c2Vob2xkX2V4dF9pZD4KICA8aW5kaXZpZHVhbF9hZ2UgPjwv
-aW5kaXZpZHVhbF9hZ2U+CiAgPGluZGl2aWR1YWxfZGlwPjwvaW5kaXZpZHVhbF9kaXA+CiAgPGlu
-ZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9wb2lu
-dF9vZl9jb250YWN0X3Bob25lX251bWJlcj4KICA8aW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9f
-aGVhZF9vZl9ob3VzZWhvbGQgPjwvaW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVhZF9vZl9o
-b3VzZWhvbGQ+CiAgPGluZGl2aWR1YWxfbGFuZ3VhZ2VfcHJlZmVyZW5jZSA+PC9pbmRpdmlkdWFs
-X2xhbmd1YWdlX3ByZWZlcmVuY2U+CiAgPGluZGl2aWR1YWxfbWVtYmVyX3N0YXR1cyA+PC9pbmRp
-dmlkdWFsX21lbWJlcl9zdGF0dXM+CiAgPGluZGl2aWR1YWxfZmlyc3RfbmFtZSA+PC9pbmRpdmlk
-dWFsX2ZpcnN0X25hbWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfbmFtZXMgPjwvaW5kaXZpZHVhbF9v
-dGhlcl9uYW1lcz4KICA8Y29sbGVjdGlvbl9kYXRlX3RpbWUgPjwvY29sbGVjdGlvbl9kYXRlX3Rp
-bWU+CiAgPGluZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9uYW1lID48L2luZGl2aWR1YWxfcG9p
-bnRfb2ZfY29udGFjdF9uYW1lPgogIDxpbmRpdmlkdWFsX2xhc3RfbmFtZSA+PC9pbmRpdmlkdWFs
-X2xhc3RfbmFtZT4KICA8aW5kaXZpZHVhbF9vdGhlcl9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVh
-bF9vdGhlcl9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfZXh0X2lkID48L2luZGl2aWR1YWxf
-ZXh0X2lkPgogIDxpbmRpdmlkdWFsX2RhdGVfb2ZfYmlydGg+PC9pbmRpdmlkdWFsX2RhdGVfb2Zf
-YmlydGg+CiAgPHByb2Nlc3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlfbWlydGg+CiAgPGZp
-ZWxkX3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsPg==
-</inboundTemplate>
+ZGVyPgogIDxpbmRpdmlkdWFsX25hdGlvbmFsaXR5PjwvaW5kaXZpZHVhbF9uYXRpb25hbGl0eT4K
+ICA8aW5kaXZpZHVhbF9hZ2VfdW5pdHM+PC9pbmRpdmlkdWFsX2FnZV91bml0cz4KICA8aW5kaXZp
+ZHVhbF9waG9uZV9udW1iZXIgID48L2luZGl2aWR1YWxfcGhvbmVfbnVtYmVyPgogIDxob3VzZWhv
+bGRfZXh0X2lkID48L2hvdXNlaG9sZF9leHRfaWQ+CiAgPGluZGl2aWR1YWxfYWdlID48L2luZGl2
+aWR1YWxfYWdlPgogIDxpbmRpdmlkdWFsX2RpcD48L2luZGl2aWR1YWxfZGlwPgogIDxpbmRpdmlk
+dWFsX3BvaW50X29mX2NvbnRhY3RfcGhvbmVfbnVtYmVyID48L2luZGl2aWR1YWxfcG9pbnRfb2Zf
+Y29udGFjdF9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfcmVsYXRpb25zaGlwX3RvX2hlYWRf
+b2ZfaG91c2Vob2xkID48L2luZGl2aWR1YWxfcmVsYXRpb25zaGlwX3RvX2hlYWRfb2ZfaG91c2Vo
+b2xkPgogIDxpbmRpdmlkdWFsX2xhbmd1YWdlX3ByZWZlcmVuY2UgPjwvaW5kaXZpZHVhbF9sYW5n
+dWFnZV9wcmVmZXJlbmNlPgogIDxpbmRpdmlkdWFsX21lbWJlcl9zdGF0dXMgPjwvaW5kaXZpZHVh
+bF9tZW1iZXJfc3RhdHVzPgogIDxpbmRpdmlkdWFsX2ZpcnN0X25hbWUgPjwvaW5kaXZpZHVhbF9m
+aXJzdF9uYW1lPgogIDxpbmRpdmlkdWFsX290aGVyX25hbWVzID48L2luZGl2aWR1YWxfb3RoZXJf
+bmFtZXM+CiAgPGNvbGxlY3Rpb25fZGF0ZV90aW1lID48L2NvbGxlY3Rpb25fZGF0ZV90aW1lPgog
+IDxpbmRpdmlkdWFsX3BvaW50X29mX2NvbnRhY3RfbmFtZSA+PC9pbmRpdmlkdWFsX3BvaW50X29m
+X2NvbnRhY3RfbmFtZT4KICA8aW5kaXZpZHVhbF9sYXN0X25hbWUgPjwvaW5kaXZpZHVhbF9sYXN0
+X25hbWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfcGhvbmVfbnVtYmVyID48L2luZGl2aWR1YWxfb3Ro
+ZXJfcGhvbmVfbnVtYmVyPgogIDxpbmRpdmlkdWFsX2V4dF9pZCA+PC9pbmRpdmlkdWFsX2V4dF9p
+ZD4KICA8aW5kaXZpZHVhbF9kYXRlX29mX2JpcnRoPjwvaW5kaXZpZHVhbF9kYXRlX29mX2JpcnRo
+PgogIDxwcm9jZXNzZWRfYnlfbWlydGggPjwvcHJvY2Vzc2VkX2J5X21pcnRoPgogIDxmaWVsZF93
+b3JrZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvaW5kaXZpZHVhbD4=</inboundTemplate>
         <outboundTemplate encoding="base64">PGluZGl2aWR1YWxGb3JtPgogIDxpbmRpdmlkdWFsX2dlbmRlcj48L2luZGl2aWR1YWxfZ2VuZGVy
-PgogIDxpbmRpdmlkdWFsX2FnZV91bml0cz48L2luZGl2aWR1YWxfYWdlX3VuaXRzPgogIDxpbmRp
-dmlkdWFsX3Bob25lX251bWJlciAgPjwvaW5kaXZpZHVhbF9waG9uZV9udW1iZXI+CiAgPGhvdXNl
-aG9sZF9leHRfaWQgPjwvaG91c2Vob2xkX2V4dF9pZD4KICA8aW5kaXZpZHVhbF9hZ2UgPjwvaW5k
-aXZpZHVhbF9hZ2U+CiAgPGluZGl2aWR1YWxfZGlwPjwvaW5kaXZpZHVhbF9kaXA+CiAgPGluZGl2
-aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9wb2ludF9v
-Zl9jb250YWN0X3Bob25lX251bWJlcj4KICA8aW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVh
-ZF9vZl9ob3VzZWhvbGQgPjwvaW5kaXZpZHVhbF9yZWxhdGlvbnNoaXBfdG9faGVhZF9vZl9ob3Vz
-ZWhvbGQ+CiAgPGluZGl2aWR1YWxfbGFuZ3VhZ2VfcHJlZmVyZW5jZSA+PC9pbmRpdmlkdWFsX2xh
-bmd1YWdlX3ByZWZlcmVuY2U+CiAgPGluZGl2aWR1YWxfbWVtYmVyX3N0YXR1cyA+PC9pbmRpdmlk
-dWFsX21lbWJlcl9zdGF0dXM+CiAgPGluZGl2aWR1YWxfZmlyc3RfbmFtZSA+PC9pbmRpdmlkdWFs
-X2ZpcnN0X25hbWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfbmFtZXMgPjwvaW5kaXZpZHVhbF9vdGhl
-cl9uYW1lcz4KICA8Y29sbGVjdGlvbl9kYXRlX3RpbWUgPjwvY29sbGVjdGlvbl9kYXRlX3RpbWU+
-CiAgPGluZGl2aWR1YWxfcG9pbnRfb2ZfY29udGFjdF9uYW1lID48L2luZGl2aWR1YWxfcG9pbnRf
-b2ZfY29udGFjdF9uYW1lPgogIDxpbmRpdmlkdWFsX2xhc3RfbmFtZSA+PC9pbmRpdmlkdWFsX2xh
-c3RfbmFtZT4KICA8aW5kaXZpZHVhbF9vdGhlcl9waG9uZV9udW1iZXIgPjwvaW5kaXZpZHVhbF9v
-dGhlcl9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfZXh0X2lkID48L2luZGl2aWR1YWxfZXh0
-X2lkPgogIDxpbmRpdmlkdWFsX2RhdGVfb2ZfYmlydGg+PC9pbmRpdmlkdWFsX2RhdGVfb2ZfYmly
-dGg+CiAgPHByb2Nlc3NlZF9ieV9taXJ0aCA+PC9wcm9jZXNzZWRfYnlfbWlydGg+CiAgPGZpZWxk
-X3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsRm9ybT4=
-</outboundTemplate>
+PgogIDxpbmRpdmlkdWFsX25hdGlvbmFsaXR5PjwvaW5kaXZpZHVhbF9uYXRpb25hbGl0eT4KICA8
+aW5kaXZpZHVhbF9hZ2VfdW5pdHM+PC9pbmRpdmlkdWFsX2FnZV91bml0cz4KICA8aW5kaXZpZHVh
+bF9waG9uZV9udW1iZXIgID48L2luZGl2aWR1YWxfcGhvbmVfbnVtYmVyPgogIDxob3VzZWhvbGRf
+ZXh0X2lkID48L2hvdXNlaG9sZF9leHRfaWQ+CiAgPGluZGl2aWR1YWxfYWdlID48L2luZGl2aWR1
+YWxfYWdlPgogIDxpbmRpdmlkdWFsX2RpcD48L2luZGl2aWR1YWxfZGlwPgogIDxpbmRpdmlkdWFs
+X3BvaW50X29mX2NvbnRhY3RfcGhvbmVfbnVtYmVyID48L2luZGl2aWR1YWxfcG9pbnRfb2ZfY29u
+dGFjdF9waG9uZV9udW1iZXI+CiAgPGluZGl2aWR1YWxfcmVsYXRpb25zaGlwX3RvX2hlYWRfb2Zf
+aG91c2Vob2xkID48L2luZGl2aWR1YWxfcmVsYXRpb25zaGlwX3RvX2hlYWRfb2ZfaG91c2Vob2xk
+PgogIDxpbmRpdmlkdWFsX2xhbmd1YWdlX3ByZWZlcmVuY2UgPjwvaW5kaXZpZHVhbF9sYW5ndWFn
+ZV9wcmVmZXJlbmNlPgogIDxpbmRpdmlkdWFsX21lbWJlcl9zdGF0dXMgPjwvaW5kaXZpZHVhbF9t
+ZW1iZXJfc3RhdHVzPgogIDxpbmRpdmlkdWFsX2ZpcnN0X25hbWUgPjwvaW5kaXZpZHVhbF9maXJz
+dF9uYW1lPgogIDxpbmRpdmlkdWFsX290aGVyX25hbWVzID48L2luZGl2aWR1YWxfb3RoZXJfbmFt
+ZXM+CiAgPGNvbGxlY3Rpb25fZGF0ZV90aW1lID48L2NvbGxlY3Rpb25fZGF0ZV90aW1lPgogIDxp
+bmRpdmlkdWFsX3BvaW50X29mX2NvbnRhY3RfbmFtZSA+PC9pbmRpdmlkdWFsX3BvaW50X29mX2Nv
+bnRhY3RfbmFtZT4KICA8aW5kaXZpZHVhbF9sYXN0X25hbWUgPjwvaW5kaXZpZHVhbF9sYXN0X25h
+bWU+CiAgPGluZGl2aWR1YWxfb3RoZXJfcGhvbmVfbnVtYmVyID48L2luZGl2aWR1YWxfb3RoZXJf
+cGhvbmVfbnVtYmVyPgogIDxpbmRpdmlkdWFsX2V4dF9pZCA+PC9pbmRpdmlkdWFsX2V4dF9pZD4K
+ICA8aW5kaXZpZHVhbF9kYXRlX29mX2JpcnRoPjwvaW5kaXZpZHVhbF9kYXRlX29mX2JpcnRoPgog
+IDxwcm9jZXNzZWRfYnlfbWlydGggPjwvcHJvY2Vzc2VkX2J5X21pcnRoPgogIDxmaWVsZF93b3Jr
+ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvaW5kaXZpZHVhbEZvcm0+</outboundTemplate>
         <inboundDataType>XML</inboundDataType>
         <outboundDataType>XML</outboundDataType>
         <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="3.0.3">
@@ -729,7 +728,7 @@ X3dvcmtlcl9leHRfaWQgPjwvZmllbGRfd29ya2VyX2V4dF9pZD4KPC9pbmRpdmlkdWFsRm9ybT4=
           <rotate>false</rotate>
           <threadCount>1</threadCount>
         </queueConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/locationForm</host>
+        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/locationForm</host>
         <method>post</method>
         <headers class="linked-hash-map"/>
         <parameters class="linked-hash-map"/>
