@@ -5,10 +5,10 @@
   <description>Channel for Update Round demographic events</description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1413912980344</time>
+    <time>1413913213406</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>1</revision>
+  <revision>2</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -101,7 +101,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/visitForm</host>
+        <host>http://localhost:8080/openhds/api/rest/visitForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -350,7 +350,7 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvdmlzaXRGb3JtPg==</outboundTempla
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/outMigrationForm</host>
+        <host>http://localhost:8080/openhds/api/rest/outMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -655,7 +655,7 @@ b3JtPg==</outboundTemplate>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/deathForm</host>
+        <host>http://localhost:8080/openhds/api/rest/deathForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -981,7 +981,7 @@ YXRoRm9ybT4=</outboundTemplate>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/pregnancyObservationForm</host>
+        <host>http://localhost:8080/openhds/api/rest/pregnancyObservationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1258,7 +1258,7 @@ cHJlZ25hbmN5T2JzZXJ2YXRpb25Gb3JtPg==</outboundTemplate>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test.rcg.usm.maine.edu:8080/openhds/api/rest/inMigrationForm</host>
+        <host>http://localhost:8080/openhds/api/rest/inMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>

@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1413912960793</time>
+    <time>1413913168398</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>1</revision>
+  <revision>3</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -106,7 +106,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/individualForm</host>
+        <host>http://localhost:8080/openhds/api/rest/individualForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -775,7 +775,7 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvaW5kaXZpZHVhbEZvcm0+</outboundTe
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://bioko-cims-test-clone.rcg.usm.maine.edu:8080/openhds/api/rest/locationForm</host>
+        <host>http://localhost:8080/openhds/api/rest/locationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
