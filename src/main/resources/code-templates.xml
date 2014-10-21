@@ -1,5 +1,5 @@
 <list>
-  <codeTemplate version="3.0.3">
+  <codeTemplate version="3.1.0">
     <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
     <name>Result Set to XML</name>
     <tooltip>Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the column names, and the values of those XML elements will be the column values</tooltip>
@@ -24,7 +24,7 @@ function resultSetToXml(rs, xmlElement) {
     <type>FUNCTION</type>
     <scope>0</scope>
   </codeTemplate>
-  <codeTemplate version="3.0.3">
+  <codeTemplate version="3.1.0">
     <id>b3441bd0-63cd-4bd4-96d1-bf98d21a4cdd</id>
     <name>Mark Record as processed</name>
     <tooltip></tooltip>

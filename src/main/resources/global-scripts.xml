@@ -1,8 +1,14 @@
 <map>
   <entry>
-    <string>Shutdown</string>
+    <string>Undeploy</string>
     <string>// This script executes once when all channels shut down from a redeploy
 // You only have access to the globalMap here to persist data
+return;</string>
+  </entry>
+  <entry>
+    <string>Postprocessor</string>
+    <string>// This script executes once after a message has been processed
+// This script applies across all channels
 return;</string>
   </entry>
   <entry>
@@ -52,11 +58,5 @@ return;</string>
     <string>// Modify the message variable below to pre process data
 // This script applies across all channels
 return message;</string>
-  </entry>
-  <entry>
-    <string>Postprocessor</string>
-    <string>// This script executes once after a message has been processed
-// This script applies across all channels
-return;</string>
   </entry>
 </map>
