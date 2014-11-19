@@ -9,10 +9,10 @@ As of 14 May 2014, it only expects Individual forms.&#xd;
 </description>
   <enabled>false</enabled>
   <lastModified>
-    <time>1416430133834</time>
+    <time>1416440067999</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>8</revision>
+  <revision>3</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -49,18 +49,20 @@ while (individualResult.next()) {
   newForms.add(individualXML.toString());
 }
 
-var visitResult = dbConn.executeCachedQuery(&amp;quot;SELECT &amp;quot;+ globalMap.get(&amp;quot;VISIT_COLUMNS&amp;quot;) +&amp;quot; FROM &amp;quot; + globalMap.get(&amp;quot;VISIT_TABLE&amp;quot;) + &amp;quot; WHERE processed_by_mirth IS NULL&amp;quot;);
+// emit new visits
+var visitResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;VISIT_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
 while (visitResult.next()) {
   // create the visit
-  var visitXML = resultSetToXml(visitResult, &amp;quot;&amp;lt;visit event=&amp;apos;visit&amp;apos; table-name=&amp;apos;&amp;quot; + globalMap.get(&amp;quot;VISIT_TABLE&amp;quot;) + &amp;quot;&amp;apos;/&amp;gt;&amp;quot;);
+  var visitXML = resultSetToXml(visitResult, &quot;&lt;visit event=&apos;visit&apos; table-name=&apos;&quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
   newForms.add(visitXML.toString());
 
 }
 
-var pregObservationResult = dbConn.executeCachedQuery(&amp;quot;SELECT &amp;quot;+ globalMap.get(&amp;quot;PREGNANCY_OBSERVATION_COLUMNS&amp;quot;) +&amp;quot; FROM &amp;quot; + globalMap.get(&amp;quot;PREGNANCY_OBSERVATION_TABLE&amp;quot;) + &amp;quot; WHERE processed_by_mirth IS NULL&amp;quot;);
+// emit new pregnancy observations
+var pregObservationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;PREGNANCY_OBSERVATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
 while (pregObservationResult.next()) {
   // create the death
-  var pregObservationXml = resultSetToXml(pregObservationResult, &amp;quot;&amp;lt;pregnancyobservation event=&amp;apos;pregnancyobservation&amp;apos; table-name=&amp;apos;&amp;quot; + globalMap.get(&amp;quot;PREGNANCY_OBSERVATION_TABLE&amp;quot;) + &amp;quot;&amp;apos;/&amp;gt;&amp;quot;);
+  var pregObservationXml = resultSetToXml(pregObservationResult, &quot;&lt;pregnancyobservation event=&apos;pregnancyobservation&apos; table-name=&apos;&quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
   newForms.add(pregObservationXml.toString());
 
 }
