@@ -4,15 +4,16 @@
   <name>Census Events</name>
   <description>This channel will attempt to read the submissions from ODK in order, according to the form&apos;s collectionDateTime field.&#xd;
 &#xd;
-As of 14 May 2014, it only expects Individual forms.&#xd;
+It deals with Census and Update forms in one channel, so that we can process them in the right order.&#xd;
+&#xd;
 &#xd;
 </description>
   <enabled>false</enabled>
   <lastModified>
-    <time>1416440067999</time>
+    <time>1416441408775</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>3</revision>
+  <revision>1</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
