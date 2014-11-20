@@ -8,12 +8,12 @@ It deals with Census and Update forms in one channel, so that we can process the
 &#xd;
 &#xd;
 </description>
-  <enabled>false</enabled>
+  <enabled>true</enabled>
   <lastModified>
-    <time>1416441408775</time>
+    <time>1416441900170</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>1</revision>
+  <revision>2</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
