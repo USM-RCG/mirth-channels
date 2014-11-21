@@ -6,51 +6,29 @@
 return;</string>
   </entry>
   <entry>
-    <string>Postprocessor</string>
-    <string>// This script executes once after a message has been processed
-// This script applies across all channels
-return;</string>
-  </entry>
-  <entry>
     <string>Deploy</string>
-    <string>// This script executes once when all channels start up from a redeploy
-// You only have access to the globalMap here to persist data
+    <string>// This script executes once when all channels start up from a redeploy&#xd;
+// You only have access to the globalMap here to persist data&#xd;
 
-// odk information
-globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);
-globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk&apos;);
-globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk&apos;);
-
-
-
-// openhds information
-globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);
-globalMap.put(&apos;OPENHDS_USER&apos;,&apos;admin&apos;);
-globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;test&apos;);
-
-// odk tables and columns
-globalMap.put(&apos;INDIVIDUAL_TABLE&apos;,&apos;INDIVIDUAL_CORE&apos;);
-globalMap.put(&apos;INDIVIDUAL_COLUMNS&apos;,&apos;_URI, INDIVIDUAL_NATIONALITY, INDIVIDUAL_GENDER, INDIVIDUAL_AGE_UNITS, INDIVIDUAL_PHONE_NUMBER, HOUSEHOLD_EXT_ID, INDIVIDUAL_AGE, INDIVIDUAL_DIP, INDIVIDUAL_POINT_OF_CONTACT_PHONE_NUMBER, INDIVIDUAL_RELATIONSHIP_TO_HEAD_OF_HOUSEHOLD, INDIVIDUAL_LANGUAGE_PREFERENCE, INDIVIDUAL_MEMBER_STATUS, INDIVIDUAL_FIRST_NAME, INDIVIDUAL_OTHER_NAMES, COLLECTION_DATE_TIME, INDIVIDUAL_POINT_OF_CONTACT_NAME, INDIVIDUAL_LAST_NAME, INDIVIDUAL_OTHER_PHONE_NUMBER, INDIVIDUAL_EXT_ID, INDIVIDUAL_DATE_OF_BIRTH, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
-// Update Round: odk tables and columns
-globalMap.put(&apos;VISIT_TABLE&apos;,&apos;VISIT_CORE&apos;);
-globalMap.put(&apos;VISIT_COLUMNS&apos;,&apos;_URI, VISIT_DATE, VISIT_EXT_ID, LOCATION_EXT_ID, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
-globalMap.put(&apos;OUT_MIGRATION_TABLE&apos;,&apos;OUT_MIGRATION_CORE&apos;);
-globalMap.put(&apos;OUT_MIGRATION_COLUMNS&apos;,&apos;_URI, OUT_MIGRATION_DATE, VISIT_EXT_ID, OUT_MIGRATION_INDIVIDUAL_EXT_ID, OUT_MIGRATION_NAME_OF_DESTINATION, OUT_MIGRATION_REASON, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
-globalMap.put(&apos;IN_MIGRATION_TABLE&apos;,&apos;IN_MIGRATION_CORE&apos;);
-globalMap.put(&apos;IN_MIGRATION_COLUMNS&apos;,&apos;_URI, MIGRATION_REASON, MIGRATION_ORIGIN, LOCATION_EXT_ID, COLLECTION_DATE_TIME, INDIVIDUAL_EXT_ID, MIGRATION_TYPE, VISIT_EXT_ID, NEEDS_REVIEW, MIGRATION_DATE, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
-globalMap.put(&apos;LOCATION_TABLE&apos;, &apos;LOCATION_CORE&apos;);
-globalMap.put(&apos;LOCATION_COLUMNS&apos;,&apos;_URI, HIERARCHY_EXT_ID, LOCATION_EXT_ID, LOCATION_NAME, LOCATION_TYPE, COMMUNITY_NAME, COMMUNITY_CODE, MAP_AREA_NAME, LOCALITY_NAME, SECTOR_NAME, COLLECTION_DATE_TIME, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID, LOCATION_FLOOR_NUMBER, LOCATION_BUILDING_NUMBER&apos;);
-
-globalMap.put(&apos;DEATH_TABLE&apos;,&apos;DEATH_CORE&apos;);
-globalMap.put(&apos;DEATH_COLUMNS&apos;,&apos;_URI, COLLECTION_DATE_TIME, VISIT_EXT_ID, INDIVIDUAL_EXT_ID, DATE_OF_DEATH, PLACE_OF_DEATH, CAUSE_OF_DEATH, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
-globalMap.put(&apos;PREGNANCY_OBSERVATION_TABLE&apos;,&apos;PREGNANCY_OBSERVATION_CORE&apos;);
-globalMap.put(&apos;PREGNANCY_OBSERVATION_COLUMNS&apos;,&apos;_URI, RECORDED_DATE, VISIT_EXT_ID, INDIVIDUAL_EXT_ID, EXPECTED_DELIVERY_DATE, PROCESSED_BY_MIRTH, FIELD_WORKER_EXT_ID&apos;);
-
+// odk credentials&#xd;
+globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);&#xd;
+globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk&apos;);&#xd;
+globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;jugaPaha4R&apos;);&#xd;
+&#xd;
+// openhds credentials&#xd;
+globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);&#xd;
+globalMap.put(&apos;OPENHDS_USER&apos;,&apos;gandalf&apos;);&#xd;
+globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;haze2hAsed&apos;);&#xd;
+&#xd;
+// sequence of odk tables that Mirth should query&#xd;
+globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [&apos;LOCATION_CORE&apos;, &apos;INDIVIDUAL_CORE&apos;, &apos;VISIT_CORE&apos;,&apos;PREGNANCY_OBSERVATION_CORE&apos;])&#xd;
+&#xd;
+// map odk table names to form events that Mirth should emit&#xd;
+globalMap.put(&apos;LOCATION_CORE&apos;, &apos;locationForm&apos;);&#xd;
+globalMap.put(&apos;INDIVIDUAL_CORE&apos;, &apos;individualForm&apos;);&#xd;
+globalMap.put(&apos;VISIT_CORE&apos;, &apos;visitForm&apos;);&#xd;
+globalMap.put(&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;pregnancyObservationForm&apos;);&#xd;
+&#xd;
 return;</string>
   </entry>
   <entry>
@@ -58,5 +36,11 @@ return;</string>
     <string>// Modify the message variable below to pre process data
 // This script applies across all channels
 return message;</string>
+  </entry>
+  <entry>
+    <string>Postprocessor</string>
+    <string>// This script executes once after a message has been processed
+// This script applies across all channels
+return;</string>
   </entry>
 </map>

@@ -10,10 +10,10 @@ It deals with Census and Update forms in one channel, so that we can process the
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1416441900170</time>
+    <time>1416606685916</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>2</revision>
+  <revision>10</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -31,45 +31,26 @@ It deals with Census and Update forms in one channel, so that we can process the
         <processBatch>false</processBatch>
         <firstResponse>false</firstResponse>
       </sourceConnectorProperties>
-      <script>var newForms = new java.util.ArrayList()
-var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
-
-var locationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;LOCATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
-
-while (locationResult.next()) {
-  // create the locationf
-  var locationXML = resultSetToXml(locationResult, &quot;&lt;locationForm event=&apos;locationForm&apos; table-name=&apos;&quot; + globalMap.get(&quot;LOCATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(locationXML.toString());
-}
-
-// emit new individuals
-var individualResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;INDIVIDUAL_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);
-while (individualResult.next()) {
-  // create the individual herself
-  var individualXML = resultSetToXml(individualResult, &quot;&lt;individual event=&apos;individual&apos; table-name=&apos;&quot; + globalMap.get(&quot;INDIVIDUAL_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(individualXML.toString());
-}
-
-// emit new visits
-var visitResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;VISIT_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (visitResult.next()) {
-  // create the visit
-  var visitXML = resultSetToXml(visitResult, &quot;&lt;visit event=&apos;visit&apos; table-name=&apos;&quot; + globalMap.get(&quot;VISIT_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(visitXML.toString());
-
-}
-
-// emit new pregnancy observations
-var pregObservationResult = dbConn.executeCachedQuery(&quot;SELECT &quot;+ globalMap.get(&quot;PREGNANCY_OBSERVATION_COLUMNS&quot;) +&quot; FROM &quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot; WHERE processed_by_mirth IS NULL&quot;);
-while (pregObservationResult.next()) {
-  // create the death
-  var pregObservationXml = resultSetToXml(pregObservationResult, &quot;&lt;pregnancyobservation event=&apos;pregnancyobservation&apos; table-name=&apos;&quot; + globalMap.get(&quot;PREGNANCY_OBSERVATION_TABLE&quot;) + &quot;&apos;/&gt;&quot;);
-  newForms.add(pregObservationXml.toString());
-
-}
-
-
-dbConn.close();
+      <script>var newForms = new java.util.ArrayList()&#xd;
+var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));&#xd;
+&#xd;
+// Query ODK tables in specific sequence and emit Mirth events&#xd;
+var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
+var nTables = odkTableSequence.length;&#xd;
+for (var i = 0; i &lt; nTables; i++) {&#xd;
+  // query an ODK table&#xd;
+  var tableName = odkTableSequence[i];&#xd;
+  var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY _CREATION_DATE&quot;);&#xd;
+ &#xd;
+  // emit a Mirth event for each row in the result&#xd;
+  var eventName = globalMap.get(tableName);&#xd;
+  while (queryResults.next()) {&#xd;
+    var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
+    newForms.add(resultXML.toString());&#xd;
+  }&#xd;
+}&#xd;
+//&#xd;
+dbConn.close();&#xd;
 return newForms;</script>
     </properties>
     <transformer version="3.1.0">
@@ -142,521 +123,16 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
-        <content>${message.transformedData}</content>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
+        <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
         <charset>UTF-8</charset>
         <socketTimeout>30000</socketTimeout>
       </properties>
       <transformer version="3.1.0">
-        <steps>
-          <step>
-            <sequenceNumber>0</sequenceNumber>
-            <name>field worker extId</name>
-            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;field_worker_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>1</sequenceNumber>
-            <name>gender</name>
-            <script>tmp[&apos;individual_gender&apos;] = validate(msg[&apos;individual_gender&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_gender&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_gender&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>2</sequenceNumber>
-            <name>age units</name>
-            <script>tmp[&apos;individual_age_units&apos;] = validate(msg[&apos;individual_age_units&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_age_units&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_age_units&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>3</sequenceNumber>
-            <name>phone number</name>
-            <script>tmp[&apos;individual_phone_number&apos;] = validate(msg[&apos;individual_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_phone_number&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_phone_number&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>4</sequenceNumber>
-            <name>household extId</name>
-            <script>tmp[&apos;household_ext_id&apos;] = validate(msg[&apos;household_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;household_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;household_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>5</sequenceNumber>
-            <name>age</name>
-            <script>tmp[&apos;individual_age&apos;] = validate(msg[&apos;individual_age&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_age&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_age&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>6</sequenceNumber>
-            <name>dip</name>
-            <script>tmp[&apos;individual_dip&apos;] = validate(msg[&apos;individual_dip&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_dip&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_dip&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>7</sequenceNumber>
-            <name>point of contact phone number</name>
-            <script>tmp[&apos;individual_point_of_contact_phone_number&apos;] = validate(msg[&apos;individual_point_of_contact_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_point_of_contact_phone_number&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_point_of_contact_phone_number&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>8</sequenceNumber>
-            <name>relationship to head of household</name>
-            <script>tmp[&apos;individual_relationship_to_head_of_household&apos;] = validate(msg[&apos;individual_relationship_to_head_of_household&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_relationship_to_head_of_household&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_relationship_to_head_of_household&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>9</sequenceNumber>
-            <name>language preference</name>
-            <script>tmp[&apos;individual_language_preference&apos;] = validate(msg[&apos;individual_language_preference&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_language_preference&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_language_preference&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>10</sequenceNumber>
-            <name>member status</name>
-            <script>tmp[&apos;individual_member_status&apos;] = validate(msg[&apos;individual_member_status&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_member_status&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_member_status&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>11</sequenceNumber>
-            <name>first name</name>
-            <script>tmp[&apos;individual_first_name&apos;] = validate(msg[&apos;individual_first_name&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_first_name&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_first_name&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>12</sequenceNumber>
-            <name>other names</name>
-            <script>tmp[&apos;individual_other_names&apos;] = validate(msg[&apos;individual_other_names&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_other_names&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_other_names&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>13</sequenceNumber>
-            <name>date time</name>
-            <script>tmp[&apos;collection_date_time&apos;] = validate(msg[&apos;collection_date_time&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;collection_date_time&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;collection_date_time&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>14</sequenceNumber>
-            <name>point of contact name</name>
-            <script>tmp[&apos;individual_point_of_contact_name&apos;] = validate(msg[&apos;individual_point_of_contact_name&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_point_of_contact_name&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_point_of_contact_name&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>15</sequenceNumber>
-            <name>last name</name>
-            <script>tmp[&apos;individual_last_name&apos;] = validate(msg[&apos;individual_last_name&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_last_name&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_last_name&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>16</sequenceNumber>
-            <name>other phone number</name>
-            <script>tmp[&apos;individual_other_phone_number&apos;] = validate(msg[&apos;individual_other_phone_number&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_other_phone_number&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_other_phone_number&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>17</sequenceNumber>
-            <name>individual extId</name>
-            <script>tmp[&apos;individual_ext_id&apos;] = validate(msg[&apos;individual_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>18</sequenceNumber>
-            <name>date of birth</name>
-            <script>tmp[&apos;individual_date_of_birth&apos;] = validate(msg[&apos;individual_date_of_birth&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_date_of_birth&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_date_of_birth&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>19</sequenceNumber>
-            <name>processed by mirth</name>
-            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;processed_by_mirth&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>20</sequenceNumber>
-            <name>nationality</name>
-            <script>tmp[&apos;individual_nationality&apos;] = validate(msg[&apos;individual_nationality&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_nationality&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_nationality&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-        </steps>
+        <steps/>
         <inboundTemplate encoding="base64">PGluZGl2aWR1YWwgZXZlbnQ9ImluZGl2aWR1YWwiIHRhYmxlLW5hbWU9ImluZGl2aWR1YWxfY29y
 ZSI+CiAgPF91cmk+PC9fdXJpPgogIDxpbmRpdmlkdWFsX2dlbmRlcj48L2luZGl2aWR1YWxfZ2Vu
 ZGVyPgogIDxpbmRpdmlkdWFsX25hdGlvbmFsaXR5PjwvaW5kaXZpZHVhbF9uYXRpb25hbGl0eT4K
@@ -811,8 +287,8 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvaW5kaXZpZHVhbEZvcm0+</outboundTe
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -934,137 +410,16 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvaW5kaXZpZHVhbEZvcm0+</outboundTe
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
-        <content>${message.transformedData}</content>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
+        <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
         <charset>UTF-8</charset>
         <socketTimeout>30000</socketTimeout>
       </properties>
       <transformer version="3.1.0">
-        <steps>
-          <step>
-            <sequenceNumber>0</sequenceNumber>
-            <name>visit date</name>
-            <script>tmp[&apos;visit_date&apos;] = validate(msg[&apos;visit_date&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;visit_date&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;visit_date&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>1</sequenceNumber>
-            <name>field worker ext id</name>
-            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;field_worker_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>2</sequenceNumber>
-            <name>visit ext id</name>
-            <script>tmp[&apos;visit_ext_id&apos;] = validate(msg[&apos;visit_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;visit_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;visit_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>3</sequenceNumber>
-            <name>location ext id</name>
-            <script>tmp[&apos;location_ext_id&apos;] = validate(msg[&apos;location_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;location_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;location_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>4</sequenceNumber>
-            <name>processed by mirth</name>
-            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;processed_by_mirth&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-        </steps>
+        <steps/>
         <inboundTemplate encoding="base64">PHZpc2l0IGV2ZW50PSJ2aXNpdCIgdGFibGUtbmFtZT0idmlzaXRfY29yZSI+CiAgPF91cmk+PC9f
 dXJpPgogIDx2aXNpdF9kYXRlID48L3Zpc2l0X2RhdGU+CiAgPHZpc2l0X2V4dF9pZCA+PC92aXNp
 dF9leHRfaWQ+CiAgPGxvY2F0aW9uX2V4dF9pZCA+PC9sb2NhdGlvbl9leHRfaWQ+CiAgPHByb2Nl
@@ -1183,161 +538,16 @@ ZXJfZXh0X2lkID48L2ZpZWxkX3dvcmtlcl9leHRfaWQ+CjwvdmlzaXRGb3JtPg==</outboundTempla
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
-        <content>${message.transformedData}</content>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
+        <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
         <charset>UTF-8</charset>
         <socketTimeout>30000</socketTimeout>
       </properties>
       <transformer version="3.1.0">
-        <steps>
-          <step>
-            <sequenceNumber>0</sequenceNumber>
-            <name>processed by mirth</name>
-            <script>tmp[&apos;processed_by_mirth&apos;] = validate(msg[&apos;processed_by_mirth&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;processed_by_mirth&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;processed_by_mirth&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>1</sequenceNumber>
-            <name>individual ext id</name>
-            <script>tmp[&apos;individual_ext_id&apos;] = validate(msg[&apos;individual_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;individual_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;individual_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>2</sequenceNumber>
-            <name>field worker ext id</name>
-            <script>tmp[&apos;field_worker_ext_id&apos;] = validate(msg[&apos;field_worker_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;field_worker_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;field_worker_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>3</sequenceNumber>
-            <name>visit ext id</name>
-            <script>tmp[&apos;visit_ext_id&apos;] = validate(msg[&apos;visit_ext_id&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;visit_ext_id&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;visit_ext_id&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>4</sequenceNumber>
-            <name>expected delivery date</name>
-            <script>tmp[&apos;expected_delivery_date&apos;] = validate(msg[&apos;expected_delivery_date&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;expected_delivery_date&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;expected_delivery_date&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-          <step>
-            <sequenceNumber>5</sequenceNumber>
-            <name>recorded date</name>
-            <script>tmp[&apos;recorded_date&apos;] = validate(msg[&apos;recorded_date&apos;].toString(), &apos;&apos;, new Array());</script>
-            <type>Message Builder</type>
-            <data>
-              <entry>
-                <string>Variable</string>
-                <string>tmp[&apos;recorded_date&apos;]</string>
-              </entry>
-              <entry>
-                <string>Mapping</string>
-                <string>msg[&apos;recorded_date&apos;].toString()</string>
-              </entry>
-              <entry>
-                <string>DefaultValue</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>RegularExpressions</string>
-                <list/>
-              </entry>
-            </data>
-          </step>
-        </steps>
+        <steps/>
         <inboundTemplate encoding="base64">PHByZWduYW5jeW9ic2VydmF0aW9uIGV2ZW50PSJwcmVnbmFuY3lvYnNlcnZhdGlvbiIgdGFibGUt
 bmFtZT0icHJlZ25hbmN5X29ic2VydmF0aW9uX2NvcmUiPgogIDxfdXJpPjwvX3VyaT4KICA8cmVj
 b3JkZWRfZGF0ZSA+PC9yZWNvcmRlZF9kYXRlPgogIDx2aXNpdF9leHRfaWQgPjwvdmlzaXRfZXh0
