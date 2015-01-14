@@ -6,14 +6,14 @@
 &#xd;
 It deals with Census and Update forms in one channel, so that we can process them in the right order.&#xd;
 &#xd;
-It attempts to process records 1000 at a time to avoid memory errors with form sets.&#xd;
+It attempts to process records 1000 at a time to avoid memory errors with large form sets.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1421264931533</time>
+    <time>1421265088260</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>35</revision>
+  <revision>36</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
