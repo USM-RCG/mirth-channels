@@ -24,23 +24,4 @@ function resultSetToXml(rs, xmlElement) {
     <type>FUNCTION</type>
     <scope>0</scope>
   </codeTemplate>
-  <codeTemplate version="3.1.0">
-    <id>b3441bd0-63cd-4bd4-96d1-bf98d21a4cdd</id>
-    <name>Mark Record as processed</name>
-    <tooltip></tooltip>
-    <code>function markRecordAsProcessed(rawData) {
-  var originalXml = new XML(rawData);
-  // retrieve the table to update
-  var tableName = originalXml[&quot;@table-name&quot;].toString();
-  var uri = originalXml[&quot;_uri&quot;].toString();
-
-    if (tableName !== &quot;OMGIM&quot;) {
-  var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));
-  var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET processed_by_mirth = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
-  dbConn.close();
-} 
-}</code>
-    <type>FUNCTION</type>
-    <scope>0</scope>
-  </codeTemplate>
 </list>

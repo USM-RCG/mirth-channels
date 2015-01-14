@@ -6,14 +6,14 @@
 &#xd;
 It deals with Census and Update forms in one channel, so that we can process them in the right order.&#xd;
 &#xd;
-&#xd;
+It attempts to process records 1000 at a time to avoid memory errors with form sets.&#xd;
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1417635863061</time>
+    <time>1421264931533</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>6</revision>
+  <revision>35</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -38,19 +38,36 @@ var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.
 var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
 var nTables = odkTableSequence.length;&#xd;
 for (var i = 0; i &lt; nTables; i++) {&#xd;
-  // query an ODK table&#xd;
+
+  // the name of the next ODK table to query
   var tableName = odkTableSequence[i];&#xd;
-  var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME&quot;);&#xd;
- &#xd;
-  // emit a Mirth event for each row in the result&#xd;
+
+  // the name of the events to emit for this table
   var eventName = globalMap.get(tableName);&#xd;
-  while (queryResults.next()) {&#xd;
-    var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
-    newForms.add(resultXML.toString());&#xd;
-  }&#xd;
+
+  // query the table in batches to avoid memory errors 
+  while (true) {
+    var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT 1000&quot;);&#xd;
+
+    // all done with this table?
+    if (0 == queryResults.size()) {
+      break;
+    }
+
+    while (queryResults.next()) {&#xd;
+      // emit one Mirth event per row in the result
+      var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
+      newForms.add(resultXML.toString());&#xd;
+
+      // mark each row as processed
+      var uri = resultXML[&quot;_uri&quot;].toString();
+      var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
+    }
+  }
 }&#xd;
-//&#xd;
+
 dbConn.close();&#xd;
+
 return newForms;</script>
     </properties>
     <transformer version="3.1.0">
@@ -123,8 +140,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -246,8 +263,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -369,8 +386,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -490,8 +507,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>admin</username>
-        <password>test</password>
+        <username>gandalf</username>
+        <password>haze2hAsed</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -584,10 +601,6 @@ return newForms;</script>
   <preprocessingScript>// Modify the message variable below to pre process data
 return message;</preprocessingScript>
   <postprocessingScript>// This script executes once after a message has been processed
-
-// update the database record to mark it as being processed by mirth
-markRecordAsProcessed(messageObject.getRawData());
-
 return;</postprocessingScript>
   <deployScript>// This script executes once when the channel is deployed
 // You only have access to the globalMap and globalChannelMap here to persist data
