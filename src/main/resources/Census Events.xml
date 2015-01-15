@@ -10,10 +10,10 @@ It attempts to process records 1000 at a time to avoid memory errors with large 
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1421265088260</time>
+    <time>1421342544755</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>36</revision>
+  <revision>60</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -23,7 +23,7 @@ It attempts to process records 1000 at a time to avoid memory errors with large 
         <pollingType>interval</pollingType>
         <pollingHour>0</pollingHour>
         <pollingMinute>0</pollingMinute>
-        <pollingFrequency>3000</pollingFrequency>
+        <pollingFrequency>1000</pollingFrequency>
       </pollConnectorProperties>
       <sourceConnectorProperties version="3.1.0">
         <responseVariable>None</responseVariable>
@@ -37,7 +37,8 @@ var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.
 // Query ODK tables in specific sequence and emit Mirth events&#xd;
 var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
 var nTables = odkTableSequence.length;&#xd;
-for (var i = 0; i &lt; nTables; i++) {&#xd;
+var noFormsFoundYet = true;
+for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
 
   // the name of the next ODK table to query
   var tableName = odkTableSequence[i];&#xd;
@@ -45,24 +46,23 @@ for (var i = 0; i &lt; nTables; i++) {&#xd;
   // the name of the events to emit for this table
   var eventName = globalMap.get(tableName);&#xd;
 
-  // query the table in batches to avoid memory errors 
-  while (true) {
-    var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT 1000&quot;);&#xd;
+  // how many forms to process at a time
+  var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
 
-    // all done with this table?
-    if (0 == queryResults.size()) {
-      break;
-    }
+  // get one batch of forms from ODK
+  var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
 
-    while (queryResults.next()) {&#xd;
-      // emit one Mirth event per row in the result
-      var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
-      newForms.add(resultXML.toString());&#xd;
+  while (queryResults.next()) {&#xd;
+    // emit one Mirth event per row in the result set
+    var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
+    newForms.add(resultXML.toString());&#xd;
 
-      // mark each row as processed
-      var uri = resultXML[&quot;_uri&quot;].toString();
-      var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
-    }
+    // mark each row as processed
+    var uri = resultXML[&quot;_uri&quot;].toString();
+    var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
+
+    // processed at least one form, so exit
+    noFormsFoundYet = false;
   }
 }&#xd;
 

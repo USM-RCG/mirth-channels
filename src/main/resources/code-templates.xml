@@ -20,7 +20,8 @@ function resultSetToXml(rs, xmlElement) {
   }
 
   return result;
-}</code>
+}
+</code>
     <type>FUNCTION</type>
     <scope>0</scope>
   </codeTemplate>
