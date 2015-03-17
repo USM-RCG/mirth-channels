@@ -10,10 +10,10 @@ It attempts to process records 1000 at a time to avoid memory errors with large 
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1421342544755</time>
+    <time>1426610384380</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>60</revision>
+  <revision>2</revision>
   <sourceConnector version="3.1.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -633,6 +633,8 @@ return;</undeployScript>
       <type>None</type>
       <properties/>
     </attachmentProperties>
-    <archiveEnabled>true</archiveEnabled>
+    <pruneMetaDataDays>31</pruneMetaDataDays>
+    <pruneContentDays>31</pruneContentDays>
+    <archiveEnabled>false</archiveEnabled>
   </properties>
 </channel>
