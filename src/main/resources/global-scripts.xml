@@ -6,12 +6,6 @@
 return;</string>
   </entry>
   <entry>
-    <string>Postprocessor</string>
-    <string>// This script executes once after a message has been processed
-// This script applies across all channels
-return;</string>
-  </entry>
-  <entry>
     <string>Deploy</string>
     <string>// This script executes once when all channels start up from a redeploy&#xd;
 // You only have access to the globalMap here to persist data&#xd;
@@ -23,18 +17,20 @@ globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk&apos;);&#xd;
 &#xd;
 // openhds credentials&#xd;
 globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);&#xd;
-globalMap.put(&apos;OPENHDS_USER&apos;,&apos;gandalf&apos;);&#xd;
-globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;kuyg&apos;);&#xd;
+globalMap.put(&apos;OPENHDS_USER&apos;,&apos;openhds&apos;);&#xd;
+globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;openhds&apos;);&#xd;
 &#xd;
 // sequence of odk tables that Mirth should query&#xd;
-globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [&apos;LOCATION_CORE&apos;, &apos;INDIVIDUAL_CORE&apos;, &apos;VISIT_CORE&apos;,&apos;PREGNANCY_OBSERVATION_CORE&apos;])&#xd;
+globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [&apos;LOCATION_CORE&apos;, &apos;INDIVIDUAL_CORE&apos;,
+			 &apos;VISIT_CORE&apos;,&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;PREGNANCY_OUTCOME_CORE&apos;, &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;])&#xd;
 &#xd;
 // map odk table names to form events that Mirth should emit&#xd;
 globalMap.put(&apos;LOCATION_CORE&apos;, &apos;locationForm&apos;);&#xd;
 globalMap.put(&apos;INDIVIDUAL_CORE&apos;, &apos;individualForm&apos;);&#xd;
 globalMap.put(&apos;VISIT_CORE&apos;, &apos;visitForm&apos;);&#xd;
 globalMap.put(&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;pregnancyObservationForm&apos;);&#xd;
-&#xd;
+globalMap.put(&apos;PREGNANCY_OUTCOME_CORE&apos;, &apos;pregnancyOutcomeCoreForm&apos;);&#xd;globalMap.put(&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;, &apos;pregnancyOutcomeOutcomesForm&apos;);
+
 // how many ODK forms Mirth should try to process at a time
 globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;30&apos;);
 
@@ -45,5 +41,11 @@ return;</string>
     <string>// Modify the message variable below to pre process data
 // This script applies across all channels
 return message;</string>
+  </entry>
+  <entry>
+    <string>Postprocessor</string>
+    <string>// This script executes once after a message has been processed
+// This script applies across all channels
+return;</string>
   </entry>
 </map>
