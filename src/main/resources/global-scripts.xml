@@ -21,8 +21,16 @@ globalMap.put(&apos;OPENHDS_USER&apos;,&apos;openhds&apos;);&#xd;
 globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;openhds&apos;);&#xd;
 &#xd;
 // sequence of odk tables that Mirth should query&#xd;
-globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [&apos;LOCATION_CORE&apos;, &apos;INDIVIDUAL_CORE&apos;,
-			 &apos;VISIT_CORE&apos;,&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;PREGNANCY_OUTCOME_CORE&apos;, &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;])&#xd;
+globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
+				&apos;LOCATION_CORE&apos;,
+				&apos;INDIVIDUAL_CORE&apos;,
+			 	&apos;VISIT_CORE&apos;,
+				&apos;PREGNANCY_OBSERVATION_CORE&apos;, 
+				&apos;PREGNANCY_OUTCOME_CORE&apos;,
+				&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;, 
+				&apos;OUT_MIGRATION_CORE&apos;, 
+				&apos;IN_MIGRATION_CORE&apos;, 
+				&apos;DEATH_CORE&apos;])&#xd;
 &#xd;
 // map odk table names to form events that Mirth should emit&#xd;
 globalMap.put(&apos;LOCATION_CORE&apos;, &apos;locationForm&apos;);&#xd;
@@ -30,6 +38,9 @@ globalMap.put(&apos;INDIVIDUAL_CORE&apos;, &apos;individualForm&apos;);&#xd;
 globalMap.put(&apos;VISIT_CORE&apos;, &apos;visitForm&apos;);&#xd;
 globalMap.put(&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;pregnancyObservationForm&apos;);&#xd;
 globalMap.put(&apos;PREGNANCY_OUTCOME_CORE&apos;, &apos;pregnancyOutcomeCoreForm&apos;);&#xd;globalMap.put(&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;, &apos;pregnancyOutcomeOutcomesForm&apos;);
+globalMap.put(&apos;OUT_MIGRATION_CORE&apos;, &apos;outMigrationForm&apos;);
+globalMap.put(&apos;IN_MIGRATION_CORE&apos;, &apos;inMigrationForm&apos;);
+globalMap.put(&apos;DEATH_CORE&apos;, &apos;deathForm&apos;);
 
 // how many ODK forms Mirth should try to process at a time
 globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;30&apos;);
