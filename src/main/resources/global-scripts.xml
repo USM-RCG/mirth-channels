@@ -33,14 +33,17 @@ globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
 				&apos;DEATH_CORE&apos;])&#xd;
 &#xd;
 // map odk table names to form events that Mirth should emit&#xd;
-globalMap.put(&apos;LOCATION_CORE&apos;, &apos;locationForm&apos;);&#xd;
-globalMap.put(&apos;INDIVIDUAL_CORE&apos;, &apos;individualForm&apos;);&#xd;
-globalMap.put(&apos;VISIT_CORE&apos;, &apos;visitForm&apos;);&#xd;
-globalMap.put(&apos;PREGNANCY_OBSERVATION_CORE&apos;, &apos;pregnancyObservationForm&apos;);&#xd;
-globalMap.put(&apos;PREGNANCY_OUTCOME_CORE&apos;, &apos;pregnancyOutcomeCoreForm&apos;);&#xd;globalMap.put(&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;, &apos;pregnancyOutcomeOutcomesForm&apos;);
-globalMap.put(&apos;OUT_MIGRATION_CORE&apos;, &apos;outMigrationForm&apos;);
-globalMap.put(&apos;IN_MIGRATION_CORE&apos;, &apos;inMigrationForm&apos;);
-globalMap.put(&apos;DEATH_CORE&apos;, &apos;deathForm&apos;);
+globalMap.put(&apos;ODK_TABLE_EVENT&apos;, {
+	LOCATION_CORE: &apos;locationForm&apos;,
+	INDIVIDUAL_CORE: &apos;individualForm&apos;,
+	VISIT_CORE: &apos;visitForm&apos;,
+	PREGNANCY_OBSERVATION_CORE: &apos;pregnancyObservationForm&apos;,
+	PREGNANCY_OUTCOME_CORE: &apos;pregnancyOutcomeCoreForm&apos;,
+	PREGNANCY_OUTCOME_OUTCOMES: &apos;pregnancyOutcomeOutcomesForm&apos;,
+	OUT_MIGRATION_CORE: &apos;outMigrationForm&apos;,
+	IN_MIGRATION_CORE: &apos;inMigrationForm&apos;,
+	DEATH_CORE: &apos;deathForm&apos;
+});
 
 // how many ODK forms Mirth should try to process at a time
 globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;300&apos;);

@@ -39,16 +39,16 @@ try {
   var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
   var nTables = odkTableSequence.length;&#xd;
   var noFormsFoundYet = true;
+  var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
+  var tableEvents = globalMap.get(&quot;ODK_TABLE_EVENT&quot;);&#xd;
+
   for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
 
     // the name of the next ODK table to query
     var tableName = odkTableSequence[i];&#xd;
 
     // the name of the events to emit for this table
-    var eventName = globalMap.get(tableName);&#xd;
-
-    // how many forms to process at a time
-    var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
+    var eventName = tableEvents[tableName];&#xd;
 
     // get one batch of forms from ODK
     var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
