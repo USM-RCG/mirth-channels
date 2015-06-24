@@ -12,8 +12,8 @@ return;</string>
 
 // odk credentials&#xd;
 globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);&#xd;
-globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;odk&apos;);&#xd;
-globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;odk&apos;);&#xd;
+globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;mirth_odk&apos;);&#xd;
+globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;g0m1rthg0!&apos;);&#xd;
 &#xd;
 // openhds credentials&#xd;
 globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);&#xd;
