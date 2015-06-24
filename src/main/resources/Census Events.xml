@@ -23,7 +23,7 @@ It attempts to process a few records at a time to avoid memory errors with large
         <pollingType>interval</pollingType>
         <pollingHour>0</pollingHour>
         <pollingMinute>0</pollingMinute>
-        <pollingFrequency>1000</pollingFrequency>
+        <pollingFrequency>10000</pollingFrequency>
       </pollConnectorProperties>
       <sourceConnectorProperties version="3.1.0">
         <responseVariable>None</responseVariable>

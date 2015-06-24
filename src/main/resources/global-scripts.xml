@@ -43,7 +43,7 @@ globalMap.put(&apos;IN_MIGRATION_CORE&apos;, &apos;inMigrationForm&apos;);
 globalMap.put(&apos;DEATH_CORE&apos;, &apos;deathForm&apos;);
 
 // how many ODK forms Mirth should try to process at a time
-globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;30&apos;);
+globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;300&apos;);
 
 return;</string>
   </entry>
