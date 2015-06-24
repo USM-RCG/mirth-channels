@@ -33,40 +33,42 @@ It attempts to process a few records at a time to avoid memory errors with large
       </sourceConnectorProperties>
       <script>var newForms = new java.util.ArrayList()&#xd;
 var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));&#xd;
-&#xd;
-// Query ODK tables in specific sequence and emit Mirth events&#xd;
-var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
-var nTables = odkTableSequence.length;&#xd;
-var noFormsFoundYet = true;
-for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
 
-  // the name of the next ODK table to query
-  var tableName = odkTableSequence[i];&#xd;
+try {
+  // Query ODK tables in specific sequence and emit Mirth events&#xd;
+  var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
+  var nTables = odkTableSequence.length;&#xd;
+  var noFormsFoundYet = true;
+  for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
 
-  // the name of the events to emit for this table
-  var eventName = globalMap.get(tableName);&#xd;
+    // the name of the next ODK table to query
+    var tableName = odkTableSequence[i];&#xd;
 
-  // how many forms to process at a time
-  var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
+    // the name of the events to emit for this table
+    var eventName = globalMap.get(tableName);&#xd;
 
-  // get one batch of forms from ODK
-  var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
+    // how many forms to process at a time
+    var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
 
-  while (queryResults.next()) {&#xd;
-    // emit one Mirth event per row in the result set
-    var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
-    newForms.add(resultXML.toString());&#xd;
+    // get one batch of forms from ODK
+    var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
 
-    // mark each row as processed
-    var uri = resultXML[&quot;_uri&quot;].toString();
-    var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
+    while (queryResults.next()) {&#xd;
+      // emit one Mirth event per row in the result set
+      var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
+      newForms.add(resultXML.toString());&#xd;
 
-    // processed at least one form, so exit
-    noFormsFoundYet = false;
-  }
-}&#xd;
+      // mark each row as processed
+      var uri = resultXML[&quot;_uri&quot;].toString();
+      var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
 
-dbConn.close();&#xd;
+      // processed at least one form, so exit
+      noFormsFoundYet = false;
+    }
+  }&#xd;
+} finally {
+  dbConn.close();&#xd;
+}
 
 return newForms;</script>
     </properties>
