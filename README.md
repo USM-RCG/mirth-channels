@@ -10,5 +10,5 @@ between the ODK components and the rest of the CIMS system.
 
 To use this configuration to integrate ODK Aggregate and cims-server, follow the
 [Mirth section of the general CIMS deployment
-instructions](https://github.com/cims-bioko/cims-bioko.github.io/wiki/Deployment#configure-mirth).
+instructions](https://github.com/cims-bioko/cims-bioko.github.io/wiki/Deployment#installing-mirth).
 
