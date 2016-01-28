@@ -32,17 +32,41 @@ globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
 				&apos;IN_MIGRATION_CORE&apos;, 
 				&apos;DEATH_CORE&apos;])&#xd;
 &#xd;
-// map odk table names to form events that Mirth should emit&#xd;
-globalMap.put(&apos;ODK_TABLE_EVENT&apos;, {
-	LOCATION_CORE: &apos;locationForm&apos;,
-	INDIVIDUAL_CORE: &apos;individualForm&apos;,
-	VISIT_CORE: &apos;visitForm&apos;,
-	PREGNANCY_OBSERVATION_CORE: &apos;pregnancyObservationForm&apos;,
-	PREGNANCY_OUTCOME_CORE: &apos;pregnancyOutcomeCoreForm&apos;,
-	PREGNANCY_OUTCOME_OUTCOMES: &apos;pregnancyOutcomeOutcomesForm&apos;,
-	OUT_MIGRATION_CORE: &apos;outMigrationForm&apos;,
-	IN_MIGRATION_CORE: &apos;inMigrationForm&apos;,
-	DEATH_CORE: &apos;deathForm&apos;
+
+globalMap.put(&apos;ODK_TABLE_METADATA&apos;, {
+   &apos;LOCATION_CORE&apos;: {
+      &apos;event&apos;: &apos;locationForm&apos;,
+      &apos;alias&apos;: {
+         &apos;location_lat&apos;: &apos;latitude&apos;,
+         &apos;location_lng&apos;: &apos;longitude&apos;,
+         &apos;location_alt&apos;: &apos;altitude&apos;,
+         &apos;location_acc&apos;: &apos;accuracy&apos;
+      }
+   },
+   &apos;INDIVIDUAL_CORE&apos;: {
+      &apos;event&apos;: &apos;individualForm&apos;
+   },
+   &apos;VISIT_CORE&apos;: {
+      &apos;event&apos;: &apos;visitForm&apos;
+   },
+   &apos;PREGNANCY_OBSERVATION_CORE&apos;: {
+      &apos;event&apos;: &apos;pregnancyObservationForm&apos;
+   },
+   &apos;PREGNANCY_OUTCOME_CORE&apos;: {
+      &apos;event&apos;: &apos;pregnancyOutcomeCoreForm&apos;
+   },
+   &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;: {
+      &apos;event&apos;: &apos;pregnancyOutcomeOutcomesForm&apos;
+   },
+   &apos;OUT_MIGRATION_CORE&apos;: {
+      &apos;event&apos;: &apos;outMigrationForm&apos;
+   },
+   &apos;IN_MIGRATION_CORE&apos;: {
+      &apos;event&apos;: &apos;inMigrationForm&apos;
+   },
+   &apos;DEATH_CORE&apos;: {
+      &apos;event&apos;: &apos;deathForm&apos;
+   }
 });
 
 // how many ODK forms Mirth should try to process at a time

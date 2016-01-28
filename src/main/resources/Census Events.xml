@@ -40,22 +40,22 @@ try {
   var nTables = odkTableSequence.length;&#xd;
   var noFormsFoundYet = true;
   var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
-  var tableEvents = globalMap.get(&quot;ODK_TABLE_EVENT&quot;);&#xd;
+  var meta = globalMap.get(&quot;ODK_TABLE_METADATA&quot;);&#xd;
 
   for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
 
     // the name of the next ODK table to query
     var tableName = odkTableSequence[i];&#xd;
-
-    // the name of the events to emit for this table
-    var eventName = tableEvents[tableName];&#xd;
+    var tableMeta = meta[tableName];&#xd;
+    var eventName = tableMeta.event;&#xd;
+    var aliases = tableMeta.alias || {};&#xd;
 
     // get one batch of forms from ODK
     var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
 
     while (queryResults.next()) {&#xd;
       // emit one Mirth event per row in the result set
-      var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;);&#xd;
+      var resultXML = resultSetToXml(queryResults, &quot;&lt;&quot; + eventName + &quot; event=&apos;&quot; + eventName + &quot;&apos; table-name=&apos;&quot; + tableName + &quot;&apos;/&gt;&quot;, aliases);&#xd;
       newForms.add(resultXML.toString());&#xd;
 
       // mark each row as processed

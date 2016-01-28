@@ -3,23 +3,27 @@
     <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
     <name>Result Set to XML</name>
     <tooltip>Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the column names, and the values of those XML elements will be the column values</tooltip>
-    <code>// rs - the ResultSet instance
-// xmlElement - a string containing the document level xml element to use for the XML document
-function resultSetToXml(rs, xmlElement) {
-  var rsmd = rs.getMetaData();
-  var result = new XML(xmlElement);
-
-  for (var i = 1; i &lt;= rsmd.getColumnCount(); i++)  {
-	var value = rs.getString(i);
-
-    if (value === &quot;null&quot;) {
-      value = null;
-    }
-
-    result[rsmd.getColumnName(i).toLowerCase()] = value;
-  }
-
-  return result;
+    <code>
+/**
+ * Convert a database row to an xml document.
+ * 
+ * @param rs the ResultSet instance
+ * @param xmlElement a string containing the document level xml element to use for the XML document
+ * @param aliases a map of renamed columns, actual -> desired
+ */
+function resultSetToXml(rs, xmlElement, aliases) {
+   var result = new XML(xmlElement);
+   var rsmd = rs.getMetaData();
+   for (var i = 1; i &lt;= rsmd.getColumnCount(); i++)  {
+      var value = rs.getString(i);
+      if (value === &quot;null&quot;) {
+         value = null;
+      }
+      var col = rsmd.getColumnName(i).toLowerCase();
+      col = aliases[col] || col;
+      result[col] = value;
+   }
+   return result;
 }
 </code>
     <type>FUNCTION</type>
