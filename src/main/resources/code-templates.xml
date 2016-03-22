@@ -16,12 +16,10 @@ function resultSetToXml(rs, xmlElement, aliases) {
    var rsmd = rs.getMetaData();
    for (var i = 1; i &lt;= rsmd.getColumnCount(); i++)  {
       var value = rs.getString(i);
-      if (value === &quot;null&quot;) {
-         value = null;
+      if (value !== undefined &amp;&amp; value !== null) {
+         var column = rsmd.getColumnName(i).toLowerCase();
+         result[aliases[column] || column] = value;
       }
-      var col = rsmd.getColumnName(i).toLowerCase();
-      col = aliases[col] || col;
-      result[col] = value;
    }
    return result;
 }
