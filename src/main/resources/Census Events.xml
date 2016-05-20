@@ -1315,10 +1315,11 @@ return;</deployScript>
 return;</undeployScript>
   <properties version="3.4.0">
     <clearGlobalChannelMap>true</clearGlobalChannelMap>
-    <messageStorageMode>DEVELOPMENT</messageStorageMode>
+    <messageStorageMode>PRODUCTION</messageStorageMode>
     <encryptData>false</encryptData>
-    <removeContentOnCompletion>false</removeContentOnCompletion>
-    <removeAttachmentsOnCompletion>false</removeAttachmentsOnCompletion>
+    <removeContentOnCompletion>true</removeContentOnCompletion>
+    <removeOnlyFilteredOnCompletion>false</removeOnlyFilteredOnCompletion>
+    <removeAttachmentsOnCompletion>true</removeAttachmentsOnCompletion>
     <initialState>STARTED</initialState>
     <storeAttachments>false</storeAttachments>
     <tags class="linked-hash-set"/>
