@@ -126,7 +126,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/locationForm</host>
+        <host>http://localhost:8888/openhds/api/rest/locationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -249,7 +249,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/individualForm</host>
+        <host>http://localhost:8888/openhds/api/rest/individualForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -372,7 +372,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/visitForm</host>
+        <host>http://localhost:8888/openhds/api/rest/visitForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -493,7 +493,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/pregnancyObservationForm</host>
+        <host>http://localhost:8888/openhds/api/rest/pregnancyObservationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -614,7 +614,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/pregnancyOutcomeForm/core</host>
+        <host>http://localhost:8888/openhds/api/rest/pregnancyOutcomeForm/core</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -735,7 +735,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/pregnancyOutcomeForm/outcomes</host>
+        <host>http://localhost:8888/openhds/api/rest/pregnancyOutcomeForm/outcomes</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -856,7 +856,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/inMigrationForm</host>
+        <host>http://localhost:8888/openhds/api/rest/inMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -976,7 +976,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/outMigrationForm</host>
+        <host>http://localhost:8888/openhds/api/rest/outMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1096,7 +1096,7 @@ return newForms;</script>
           <threadCount>1</threadCount>
           <validateResponse>false</validateResponse>
         </destinationConnectorProperties>
-        <host>http://localhost:8080/openhds/api/rest/deathForm</host>
+        <host>http://localhost:8888/openhds/api/rest/deathForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
