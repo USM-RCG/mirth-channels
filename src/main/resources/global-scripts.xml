@@ -29,6 +29,7 @@ globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;openhds&apos;);&#xd;
 // sequence of odk tables that Mirth should query&#xd;
 globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
 				&apos;LOCATION_CORE&apos;,
+				&apos;DUPLICATE_LOCATION_CORE&apos;,
 				&apos;INDIVIDUAL_CORE&apos;,
 			 	&apos;VISIT_CORE&apos;,
 				&apos;PREGNANCY_OBSERVATION_CORE&apos;, 
@@ -48,6 +49,9 @@ globalMap.put(&apos;ODK_TABLE_METADATA&apos;, {
          &apos;location_alt&apos;: &apos;altitude&apos;,
          &apos;location_acc&apos;: &apos;accuracy&apos;
       }
+   },
+   &apos;DUPLICATE_LOCATION_CORE&apos;: {
+   	&apos;event&apos;: &apos;duplicateLocationForm&apos;
    },
    &apos;INDIVIDUAL_CORE&apos;: {
       &apos;event&apos;: &apos;individualForm&apos;
