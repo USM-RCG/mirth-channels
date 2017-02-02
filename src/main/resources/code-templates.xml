@@ -1,15 +1,55 @@
-<list>
-  <codeTemplate version="3.1.0">
-    <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
-    <name>Result Set to XML</name>
-    <tooltip>Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the column names, and the values of those XML elements will be the column values</tooltip>
-    <code>
-/**
+<codeTemplateLibrary version="3.4.0">
+  <id>7dbca90c-a008-46e8-bb2d-0562d61868e5</id>
+  <name>Library 1</name>
+  <revision>3</revision>
+  <lastModified>
+    <time>1464115072996</time>
+    <timezone>America/New_York</timezone>
+  </lastModified>
+  <description></description>
+  <includeNewChannels>false</includeNewChannels>
+  <enabledChannelIds>
+    <string>fdd39025-12ee-4398-9d81-a80470181582</string>
+  </enabledChannelIds>
+  <disabledChannelIds/>
+  <codeTemplates>
+    <codeTemplate version="3.4.0">
+      <id>6758f0cc-1618-4c7a-b3fe-3d1ae4b40246</id>
+      <name>Result Set to XML</name>
+      <revision>1</revision>
+      <lastModified>
+        <time>1463763329672</time>
+        <timezone>America/New_York</timezone>
+      </lastModified>
+      <type>FUNCTION</type>
+      <contextSet>
+        <delegate>
+          <contextType>DESTINATION_DISPATCHER</contextType>
+          <contextType>CHANNEL_ATTACHMENT</contextType>
+          <contextType>CHANNEL_DEPLOY</contextType>
+          <contextType>GLOBAL_DEPLOY</contextType>
+          <contextType>GLOBAL_UNDEPLOY</contextType>
+          <contextType>CHANNEL_BATCH</contextType>
+          <contextType>CHANNEL_PREPROCESSOR</contextType>
+          <contextType>SOURCE_RECEIVER</contextType>
+          <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+          <contextType>CHANNEL_UNDEPLOY</contextType>
+          <contextType>GLOBAL_POSTPROCESSOR</contextType>
+          <contextType>CHANNEL_POSTPROCESSOR</contextType>
+          <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>GLOBAL_PREPROCESSOR</contextType>
+          <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+        </delegate>
+      </contextSet>
+      <code>/**
+	Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the
+	column names, and the values of those XML elements will be the column values
+
  * Convert a database row to an xml document.
  * 
  * @param rs the ResultSet instance
  * @param xmlElement a string containing the document level xml element to use for the XML document
- * @param aliases a map of renamed columns, actual -> desired
+ * @param aliases a map of renamed columns, actual -&gt; desired
  */
 function resultSetToXml(rs, xmlElement, aliases) {
    var result = new XML(xmlElement);
@@ -22,9 +62,7 @@ function resultSetToXml(rs, xmlElement, aliases) {
       }
    }
    return result;
-}
-</code>
-    <type>FUNCTION</type>
-    <scope>0</scope>
-  </codeTemplate>
-</list>
+}</code>
+    </codeTemplate>
+  </codeTemplates>
+</codeTemplateLibrary>
