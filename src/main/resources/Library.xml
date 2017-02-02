@@ -1,9 +1,9 @@
 <codeTemplateLibrary version="3.4.0">
   <id>7dbca90c-a008-46e8-bb2d-0562d61868e5</id>
   <name>Library 1</name>
-  <revision>3</revision>
+  <revision>5</revision>
   <lastModified>
-    <time>1464115072996</time>
+    <time>1486073430132</time>
     <timezone>America/New_York</timezone>
   </lastModified>
   <description></description>
@@ -34,9 +34,9 @@
           <contextType>SOURCE_RECEIVER</contextType>
           <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
           <contextType>CHANNEL_UNDEPLOY</contextType>
-          <contextType>GLOBAL_POSTPROCESSOR</contextType>
           <contextType>CHANNEL_POSTPROCESSOR</contextType>
           <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+          <contextType>GLOBAL_POSTPROCESSOR</contextType>
           <contextType>GLOBAL_PREPROCESSOR</contextType>
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
         </delegate>

@@ -10,10 +10,10 @@ It attempts to process a few records at a time to avoid memory errors with large
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1486071641981</time>
+    <time>1486073050260</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>61</revision>
+  <revision>67</revision>
   <sourceConnector version="3.4.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -1575,8 +1575,64 @@ return newForms;</script>
 return message;</preprocessingScript>
   <postprocessingScript>// This script executes once after a message has been processed
 return;</postprocessingScript>
-  <deployScript>// This script executes once when the channel is deployed
-// You only have access to the globalMap and globalChannelMap here to persist data
+  <deployScript>// tables to poll, in this order
+globalChannelMap.put(&apos;TABLE_SEQUENCE&apos;, [
+   &apos;LOCATION_CORE&apos;,
+   &apos;DUPLICATE_LOCATION_CORE&apos;,
+   &apos;SPRAYING_CORE&apos;,
+   &apos;INDIVIDUAL_CORE&apos;,
+   &apos;VISIT_CORE&apos;,
+   &apos;PREGNANCY_OBSERVATION_CORE&apos;,
+   &apos;PREGNANCY_OUTCOME_CORE&apos;,
+   &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;,
+   &apos;OUT_MIGRATION_CORE&apos;,
+   &apos;IN_MIGRATION_CORE&apos;,
+   &apos;DEATH_CORE&apos;
+]);&#xd;
+&#xd;
+// configuration for each table, used by code template
+globalChannelMap.put(&apos;TABLE_METADATA&apos;, {
+   &apos;LOCATION_CORE&apos;: {
+      &apos;event&apos;: &apos;locationForm&apos;,
+      &apos;alias&apos;: {
+         &apos;location_lat&apos;: &apos;latitude&apos;,
+         &apos;location_lng&apos;: &apos;longitude&apos;,
+         &apos;location_alt&apos;: &apos;altitude&apos;,
+         &apos;location_acc&apos;: &apos;accuracy&apos;
+      }
+   },
+   &apos;DUPLICATE_LOCATION_CORE&apos;: {
+   	 &apos;event&apos;: &apos;duplicateLocationForm&apos;
+   },
+   &apos;SPRAYING_CORE&apos;: {
+   	 &apos;event&apos;: &apos;sprayingForm&apos;
+   },
+   &apos;INDIVIDUAL_CORE&apos;: {
+      &apos;event&apos;: &apos;individualForm&apos;
+   },
+   &apos;VISIT_CORE&apos;: {
+      &apos;event&apos;: &apos;visitForm&apos;
+   },
+   &apos;PREGNANCY_OBSERVATION_CORE&apos;: {
+      &apos;event&apos;: &apos;pregnancyObservationForm&apos;
+   },
+   &apos;PREGNANCY_OUTCOME_CORE&apos;: {
+      &apos;event&apos;: &apos;pregnancyOutcomeCoreForm&apos;
+   },
+   &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;: {
+      &apos;event&apos;: &apos;pregnancyOutcomeOutcomesForm&apos;
+   },
+   &apos;OUT_MIGRATION_CORE&apos;: {
+      &apos;event&apos;: &apos;outMigrationForm&apos;
+   },
+   &apos;IN_MIGRATION_CORE&apos;: {
+      &apos;event&apos;: &apos;inMigrationForm&apos;
+   },
+   &apos;DEATH_CORE&apos;: {
+      &apos;event&apos;: &apos;deathForm&apos;
+   }
+});
+
 return;</deployScript>
   <undeployScript>// This script executes once when the channel is undeployed
 // You only have access to the globalMap and globalChannelMap here to persist data
