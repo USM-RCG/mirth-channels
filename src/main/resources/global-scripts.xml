@@ -13,35 +13,23 @@ return;</string>
   </entry>
   <entry>
     <string>Deploy</string>
-    <string>// This script executes once when all channels start up from a redeploy&#xd;
-// You only have access to the globalMap here to persist data&#xd;
-
-// odk credentials&#xd;
-globalMap.put(&apos;ODK_DATABASE_URL&apos;,&apos;jdbc:mysql://localhost/odk_prod&apos;);&#xd;
-globalMap.put(&apos;ODK_DATABASE_USER&apos;,&apos;mirth_odk&apos;);&#xd;
-globalMap.put(&apos;ODK_DATABASE_PASSWORD&apos;,&apos;g0m1rthg0!&apos;);&#xd;
+    <string>// sequence of odk tables that Mirth should query&#xd;
+globalMap.put(&apos;TABLE_SEQUENCE&apos;, [
+   &apos;LOCATION_CORE&apos;,
+   &apos;DUPLICATE_LOCATION_CORE&apos;,
+   &apos;SPRAYING_CORE&apos;,
+   &apos;INDIVIDUAL_CORE&apos;,
+   &apos;VISIT_CORE&apos;,
+   &apos;PREGNANCY_OBSERVATION_CORE&apos;,
+   &apos;PREGNANCY_OUTCOME_CORE&apos;,
+   &apos;PREGNANCY_OUTCOME_OUTCOMES&apos;,
+   &apos;OUT_MIGRATION_CORE&apos;,
+   &apos;IN_MIGRATION_CORE&apos;,
+   &apos;DEATH_CORE&apos;
+]);&#xd;
 &#xd;
-// openhds credentials&#xd;
-globalMap.put(&apos;OPENHDS_PATH&apos;,&apos;localhost:8080/openhds&apos;);&#xd;
-globalMap.put(&apos;OPENHDS_USER&apos;,&apos;openhds&apos;);&#xd;
-globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;openhds&apos;);&#xd;
-&#xd;
-// sequence of odk tables that Mirth should query&#xd;
-globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
-				&apos;LOCATION_CORE&apos;,
-				&apos;DUPLICATE_LOCATION_CORE&apos;,
-				&apos;SPRAYING_CORE&apos;,
-				&apos;INDIVIDUAL_CORE&apos;,
-			 	&apos;VISIT_CORE&apos;,
-				&apos;PREGNANCY_OBSERVATION_CORE&apos;, 
-				&apos;PREGNANCY_OUTCOME_CORE&apos;,
-				&apos;PREGNANCY_OUTCOME_OUTCOMES&apos;, 
-				&apos;OUT_MIGRATION_CORE&apos;, 
-				&apos;IN_MIGRATION_CORE&apos;, 
-				&apos;DEATH_CORE&apos;])&#xd;
-&#xd;
-
-globalMap.put(&apos;ODK_TABLE_METADATA&apos;, {
+// configuration for each table, used by code template
+globalMap.put(&apos;TABLE_METADATA&apos;, {
    &apos;LOCATION_CORE&apos;: {
       &apos;event&apos;: &apos;locationForm&apos;,
       &apos;alias&apos;: {
@@ -82,9 +70,6 @@ globalMap.put(&apos;ODK_TABLE_METADATA&apos;, {
       &apos;event&apos;: &apos;deathForm&apos;
    }
 });
-
-// how many ODK forms Mirth should try to process at a time
-globalMap.put(&apos;ODK_FORM_LIMIT&apos;, &apos;300&apos;);
 
 return;</string>
   </entry>

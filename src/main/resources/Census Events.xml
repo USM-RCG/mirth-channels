@@ -10,10 +10,10 @@ It attempts to process a few records at a time to avoid memory errors with large
 </description>
   <enabled>true</enabled>
   <lastModified>
-    <time>1486052427804</time>
+    <time>1486071641981</time>
     <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>4</revision>
+  <revision>61</revision>
   <sourceConnector version="3.4.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -61,26 +61,27 @@ It attempts to process a few records at a time to avoid memory errors with large
         <queueBufferSize>1000</queueBufferSize>
       </sourceConnectorProperties>
       <script>var newForms = new java.util.ArrayList()&#xd;
-var dbConn = DatabaseConnectionFactory.createDatabaseConnection(&apos;com.mysql.jdbc.Driver&apos;, globalMap.get(&quot;ODK_DATABASE_URL&quot;), globalMap.get(&quot;ODK_DATABASE_USER&quot;), globalMap.get(&quot;ODK_DATABASE_PASSWORD&quot;));&#xd;
+var dbConn = DatabaseConnectionFactory.createDatabaseConnection($(&apos;DB_DRIVER&apos;), $(&apos;DB_URL&apos;), $(&apos;DB_USER&apos;), $(&apos;DB_PASS&apos;));&#xd;
 
 try {
-  // Query ODK tables in specific sequence and emit Mirth events&#xd;
-  var odkTableSequence = globalMap.get(&quot;ODK_TABLE_SEQUENCE&quot;);&#xd;
-  var nTables = odkTableSequence.length;&#xd;
-  var noFormsFoundYet = true;
-  var formLimit = globalMap.get(&quot;ODK_FORM_LIMIT&quot;);&#xd;
-  var meta = globalMap.get(&quot;ODK_TABLE_METADATA&quot;);&#xd;
+&#xd;
+  var tables = $(&apos;TABLE_SEQUENCE&apos;);
+  var metadata = $(&apos;TABLE_METADATA&apos;);
+  var batchSize = $(&apos;BATCH_SIZE&apos;);
+  var processed = 0;
 
-  for (var i = 0; i &lt; nTables &amp;&amp; noFormsFoundYet; i++) {&#xd;
+  logger.info(&quot;polling database for unprocessed forms...&quot;);&#xd;
 
-    // the name of the next ODK table to query
-    var tableName = odkTableSequence[i];&#xd;
-    var tableMeta = meta[tableName];&#xd;
+  for (var t = 0; t &lt; tables.length &amp;&amp; processed &lt; batchSize; t++) {
+
+    var tableName = tables[t];&#xd;
+    var tableMeta = metadata[tableName];&#xd;
     var eventName = tableMeta.event;&#xd;
-    var aliases = tableMeta.alias || {};&#xd;
+    var aliases = tableMeta.alias || {};
 
-    // get one batch of forms from ODK
-    var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + formLimit);&#xd;
+    var processedForTable = 0;&#xd;
+
+    var queryResults = dbConn.executeCachedQuery(&quot;SELECT * FROM &quot; + tableName + &quot; WHERE PROCESSED_BY_MIRTH IS NULL ORDER BY COLLECTION_DATE_TIME LIMIT &quot; + (batchSize - processed));&#xd;
 
     while (queryResults.next()) {&#xd;
       // emit one Mirth event per row in the result set
@@ -90,11 +91,16 @@ try {
       // mark each row as processed
       var uri = resultXML[&quot;_uri&quot;].toString();
       var result = dbConn.executeUpdate(&quot;UPDATE &quot; + tableName + &quot; SET PROCESSED_BY_MIRTH = true WHERE _URI = &apos;&quot; + uri + &quot;&apos;&quot;);
-
-      // processed at least one form, so exit
-      noFormsFoundYet = false;
+      
+      processedForTable += 1;
     }
-  }&#xd;
+
+	if (processedForTable &gt; 0) {
+	  processed += processedForTable;
+	  logger.info(&apos;processed &apos; + processedForTable + &quot; from &quot; + tableName + &quot;, batch total: &quot; + processed);
+	}
+  }
+  &#xd;
 } finally {
   dbConn.close();&#xd;
 }
@@ -163,7 +169,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/locationForm</host>
+        <host>${API_URL}/locationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -179,8 +185,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -294,7 +300,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/duplicateLocationForm</host>
+        <host>${API_URL}/duplicateLocationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -310,8 +316,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -425,7 +431,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/sprayingForm</host>
+        <host>${API_URL}/sprayingForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -441,8 +447,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -556,7 +562,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/individualForm</host>
+        <host>${API_URL}/individualForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -572,8 +578,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -687,7 +693,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/visitForm</host>
+        <host>${API_URL}/visitForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -703,8 +709,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -816,7 +822,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/pregnancyObservationForm</host>
+        <host>${API_URL}/pregnancyObservationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -832,8 +838,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -945,7 +951,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/pregnancyOutcomeForm/core</host>
+        <host>${API_URL}/pregnancyOutcomeForm/core</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -961,8 +967,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -1074,7 +1080,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/pregnancyOutcomeForm/outcomes</host>
+        <host>${API_URL}/pregnancyOutcomeForm/outcomes</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1090,8 +1096,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -1203,7 +1209,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/inMigrationForm</host>
+        <host>${API_URL}/inMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1219,8 +1225,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -1331,7 +1337,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/outMigrationForm</host>
+        <host>${API_URL}/outMigrationForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1347,8 +1353,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
@@ -1459,7 +1465,7 @@ return newForms;</script>
           </resourceIds>
           <queueBufferSize>1000</queueBufferSize>
         </destinationConnectorProperties>
-        <host>http://localhost:8888/openhds/api/rest/deathForm</host>
+        <host>${API_URL}/deathForm</host>
         <useProxyServer>false</useProxyServer>
         <proxyAddress></proxyAddress>
         <proxyPort></proxyPort>
@@ -1475,8 +1481,8 @@ return newForms;</script>
         <useAuthentication>true</useAuthentication>
         <authenticationType>Basic</authenticationType>
         <usePreemptiveAuthentication>true</usePreemptiveAuthentication>
-        <username>gandalf</username>
-        <password>haze2hAsed</password>
+        <username>${API_USER}</username>
+        <password>${API_PASS}</password>
         <content>${message.rawData}</content>
         <contentType>application/xml</contentType>
         <dataTypeBinary>false</dataTypeBinary>
