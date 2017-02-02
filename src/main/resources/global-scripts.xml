@@ -30,6 +30,7 @@ globalMap.put(&apos;OPENHDS_PASSWORD&apos;,&apos;openhds&apos;);&#xd;
 globalMap.put(&apos;ODK_TABLE_SEQUENCE&apos;, [
 				&apos;LOCATION_CORE&apos;,
 				&apos;DUPLICATE_LOCATION_CORE&apos;,
+				&apos;SPRAYING_CORE&apos;,
 				&apos;INDIVIDUAL_CORE&apos;,
 			 	&apos;VISIT_CORE&apos;,
 				&apos;PREGNANCY_OBSERVATION_CORE&apos;, 
@@ -51,7 +52,10 @@ globalMap.put(&apos;ODK_TABLE_METADATA&apos;, {
       }
    },
    &apos;DUPLICATE_LOCATION_CORE&apos;: {
-   	&apos;event&apos;: &apos;duplicateLocationForm&apos;
+   	 &apos;event&apos;: &apos;duplicateLocationForm&apos;
+   },
+   &apos;SPRAYING_CORE&apos;: {
+   	 &apos;event&apos;: &apos;sprayingForm&apos;
    },
    &apos;INDIVIDUAL_CORE&apos;: {
       &apos;event&apos;: &apos;individualForm&apos;
