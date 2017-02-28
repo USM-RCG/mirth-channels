@@ -41,12 +41,13 @@
           <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
         </delegate>
       </contextSet>
-      <code>/**
-	Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the
-	column names, and the values of those XML elements will be the column values
-
+      <code>
+/**
+ * Converts a java.sql.ResultSet to an XML representation. The XML will have elements named after the
+ * column names, and the values of those XML elements will be the column values
+ *
  * Convert a database row to an xml document.
- * 
+ *
  * @param rs the ResultSet instance
  * @param xmlElement a string containing the document level xml element to use for the XML document
  * @param aliases a map of renamed columns, actual -&gt; desired
