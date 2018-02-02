@@ -1,5 +1,7 @@
 # Mirth Channels
 
+*This project is no longer active. With the elimination of ODK Aggregate and Mirth from the system architecuture, the need for these was eliminated. This project now exists only for archival purposes.*
+
 Configuration for the Mirth system used to implement data integration between
 ODK Aggregate and cims-server. It defines a process that is used to pick up data
 as it is uploaded to ODK Aggregate and transfer it to cims-server using
